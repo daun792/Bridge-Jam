@@ -70,7 +70,6 @@ public class SoundManager : Manager
     [Header("Audio Sources")]
     [SerializeField] AudioSource bgmPlayer = null;
     [SerializeField] AudioSource sfxPlayer = null;
-    [SerializeField] AudioSource typeWritePlayer = null;
 
     [Header("Audio Mixer")]
     [SerializeField] AudioMixer mixer;
@@ -171,26 +170,6 @@ public class SoundManager : Manager
     public bool IsPlayingSFX()
     {
         return sfxPlayer.isPlaying;
-    }
-    #endregion
-
-    #region TypeWrite
-    public void PlayTypeWriteSFX(string _name)
-    {
-        if (!dic_SFX.TryGetValue(_name, out var clip))
-        {
-            Debug.LogError("ERROR: Failed to play SFX. Unable to find " + _name);
-            return;
-        }
-
-        typeWritePlayer.clip = clip;
-
-        typeWritePlayer.Play();
-    }
-
-    public bool IsPlayingTypeWriteSFX()
-    {
-        return typeWritePlayer.isPlaying;
     }
     #endregion
 

@@ -81,12 +81,15 @@ public class UIManager : Manager
         blackBlur.gameObject.SetActive(true);
 
         blackBlur.DOKill();
-        blackBlur.DOFade(1f, 0.5f).SetEase(Ease.Linear)
-           .OnComplete(() =>
-           {
-               _midEvent?.Invoke();
-               FadeOut();
-           });
+
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(blackBlur.DOFade(1f, 0.2f).SetEase(Ease.Linear))
+            .AppendInterval(0.3f)
+            .OnComplete(() =>
+            {
+                _midEvent?.Invoke();
+                FadeOut();
+            });
     }
     #endregion
 }
