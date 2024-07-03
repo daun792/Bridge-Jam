@@ -20,7 +20,7 @@ public class MapManager : Manager
 
     public void LoadNextStage()
     {
-        if (stageIndex > 0) //TODO:
+        if (stageIndex > 3) //TODO:
         {
             StartCoroutine(EndGame());
             return;
