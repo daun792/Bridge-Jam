@@ -7,10 +7,9 @@ public class TitleManager : MonoBehaviour
 {
     [SerializeField] Button startBtn;
 
-    // Start is called before the first frame update
     void Start()
     {
-       //startBtn.onClick.AddListener(()=>)
+        startBtn.onClick.AddListener(() => Base.LoadScene(SceneName.Game));
     }
 
     // Update is called once per frame
