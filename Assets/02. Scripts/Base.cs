@@ -10,11 +10,13 @@ public enum SceneName
 public class Base : Singleton<Base>
 {
     private readonly SoundManager sound;
+    private readonly UIManager ui;
     private readonly SettingData setting;
 
     public partial class Manager
     {
         public static SoundManager Sound => instance.sound;
+        public static UIManager UI => instance.ui;
     }
 
     public class Data
