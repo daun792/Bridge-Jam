@@ -18,11 +18,11 @@ public class MapManager : Manager
 
     private void Start()
     {
-        cameraTrans.position = new Vector3(0f, 10f, -10f);
-        cameraTrans.DOMoveY(0f, 1f).SetEase(Ease.OutCubic);
+        //cameraTrans.position = new Vector3(0f, 10f, -10f);
+        //cameraTrans.DOMoveY(0f, 1f).SetEase(Ease.OutCubic);
         player = playerTrans.GetComponent<CharacterBase>();
         timeCheckRoutine = CheckTime();
-        StartCoroutine(timeCheckRoutine);
+        //StartCoroutine(timeCheckRoutine);
     }
 
     public void LoadNextStage()
