@@ -122,7 +122,7 @@ public class UIManager : Manager
     #endregion
 
     #region Items
-    public void ActiveItemObtained(int _index)
+    public void ActiveItem(int _index)
     {
         itemImgs[_index].sprite = itemSprites[_index];
     }

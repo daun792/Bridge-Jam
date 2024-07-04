@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class DrugItem : MonoBehaviour
 {
+    [SerializeField] int itemIndex;
     public UnityEvent OnUseDrug;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -12,6 +13,7 @@ public class DrugItem : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             OnUseDrug?.Invoke();
+            Base.Manager.UI.ActiveItem(itemIndex);
             gameObject.SetActive(false);
         }
     }
