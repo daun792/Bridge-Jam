@@ -13,6 +13,7 @@ public class DrugItem : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             OnUseDrug?.Invoke();
+            Base.Manager.Map.UseDrug();
             Base.Manager.UI.ActiveItem(itemIndex);
             gameObject.SetActive(false);
         }

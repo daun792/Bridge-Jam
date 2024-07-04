@@ -12,12 +12,14 @@ public class MapManager : Manager
 
     private int stageIndex = 1;
     private bool isUseDrug = false;
+    private IEnumerator timeCheckRoutine;
 
     private void Start()
     {
         cameraTrans.position = new Vector3(0f, 10f, -10f);
         cameraTrans.DOMoveY(0f, 1f).SetEase(Ease.OutCubic);
-        StartCoroutine(CheckTime());
+        timeCheckRoutine = CheckTime();
+        StartCoroutine(timeCheckRoutine);
     }
 
     public void LoadNextStage()
@@ -43,19 +45,32 @@ public class MapManager : Manager
         Base.Manager.UI.FadeInOut(ResetStage);
     }
 
+    public void UseDrug()
+    {
+        isUseDrug = true;
+    }
+
     private void InitStage()
     {
+        if (isUseDrug)
+        {
+            SetDrugEffect();
+        }
+
         MoveCamera();
         MovePlayer();
 
         stageIndex++;
-        StopCoroutine("CheckTime");
-        StartCoroutine(CheckTime());
+        StopCoroutine(timeCheckRoutine);
+        timeCheckRoutine = CheckTime();
+        StartCoroutine(timeCheckRoutine);
+        isUseDrug = false;
     }
 
     private void ResetStage()
     {
         stageIndex--;
+        isUseDrug = false;
         InitStage();
     }
 
@@ -68,6 +83,19 @@ public class MapManager : Manager
     private void MovePlayer()
     {
         playerTrans.position = stageStartPosition[stageIndex].position;
+    }
+
+    private void SetDrugEffect()
+    {
+        switch (stageIndex)
+        {
+            case 1:
+                Base.Manager.PostProcessing.SetSaturation(-100f);
+                break;
+            default:
+                Base.Manager.PostProcessing.SetSaturation(0f);
+                break;
+        }
     }
 
     private IEnumerator EndGame()
