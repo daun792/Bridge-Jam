@@ -24,12 +24,12 @@ public class PostProcessingManager : Manager
     public void SetLensDistortion()
     {
         volume.profile.TryGet(out UnityEngine.Rendering.Universal.LensDistortion lensDistortion);
-        lensDistortion.intensity.value = -0.5f;
+        lensDistortion.intensity.value = -0.4f;
     }
 
     public void SetFlashBack()
     {
         volume.profile.TryGet(out UnityEngine.Rendering.Universal.ChromaticAberration chromaticAberration);
-        chromaticAberration.intensity.value = 0.5f;
+        chromaticAberration.intensity.value = 0.4f;
     }
 }
