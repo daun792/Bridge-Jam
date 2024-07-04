@@ -46,11 +46,20 @@ public class MapManager : Manager
             return;
         }
 
+        Base.Manager.Sound.PlaySFX("SFX_PlayerDead");
         Base.Manager.UI.FadeInOut(ResetStage);
     }
 
     public void UseDrug()
     {
+        if (drugCount >= 8)
+        {
+            Base.Manager.Sound.PlaySFX("SFX_GetItem_Sick");
+        }
+        else
+        {
+            Base.Manager.Sound.PlaySFX("SFX_GetItem");
+        }
         isUseDrug = true;
     }
 

@@ -15098,6 +15098,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Base
       objectReference: {fileID: 0}
+    - target: {fileID: 2943895316704030672, guid: e81339488105f3144b4ba719bdb5bbeb, type: 3}
+      propertyPath: SFX.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943895316704030672, guid: e81339488105f3144b4ba719bdb5bbeb, type: 3}
+      propertyPath: SFX.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: e947f6f2adf80654690e2a83c8f01484, type: 3}
+    - target: {fileID: 2943895316704030672, guid: e81339488105f3144b4ba719bdb5bbeb, type: 3}
+      propertyPath: SFX.Array.data[2].name
+      value: SFX_PlayerDead
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943895316704030672, guid: e81339488105f3144b4ba719bdb5bbeb, type: 3}
+      propertyPath: SFX.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2eb1afb21b605a641bac38263cdab868, type: 3}
+    - target: {fileID: 2943895316704030672, guid: e81339488105f3144b4ba719bdb5bbeb, type: 3}
+      propertyPath: SFX.Array.data[3].name
+      value: SFX_PlayerJump
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943895316704030672, guid: e81339488105f3144b4ba719bdb5bbeb, type: 3}
+      propertyPath: SFX.Array.data[4].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: f3776050bea70bc4fa1a8077bcef7a93, type: 3}
+    - target: {fileID: 2943895316704030672, guid: e81339488105f3144b4ba719bdb5bbeb, type: 3}
+      propertyPath: SFX.Array.data[4].name
+      value: SFX_GetItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 2943895316704030672, guid: e81339488105f3144b4ba719bdb5bbeb, type: 3}
+      propertyPath: SFX.Array.data[5].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 597358d3a9a6b8a489cc449151d8e442, type: 3}
+    - target: {fileID: 2943895316704030672, guid: e81339488105f3144b4ba719bdb5bbeb, type: 3}
+      propertyPath: SFX.Array.data[5].name
+      value: SFX_GetItem_Sick
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e81339488105f3144b4ba719bdb5bbeb, type: 3}
 --- !u!1001 &641622271

@@ -119,6 +119,7 @@ public class CharacterBase : MonoBehaviour
 
     public virtual void Jump()
     {
+        Base.Manager.Sound.PlaySFX("SFX_PlayerJump");
         gravity.y = JumpVelocity * GravityScale * jumpVelocityCoefficient;
     }
 
