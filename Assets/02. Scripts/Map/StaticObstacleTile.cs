@@ -9,7 +9,18 @@ public class StaticObstacleTile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Base.Manager.Map.ReloadStage();
+            collision.gameObject.TryGetComponent(out CharacterBase characterBase);
+            if (characterBase != null)
+            {
+                if (!characterBase.Invincible)
+                {
+                    Base.Manager.Map.ReloadStage();
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                }
+            } 
         }
     }
 }
