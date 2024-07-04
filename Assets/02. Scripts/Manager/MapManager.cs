@@ -8,6 +8,7 @@ public class MapManager : Manager
     [SerializeField] Transform cameraTrans;
     [SerializeField] Transform playerTrans;
     [SerializeField] Transform[] stageStartPosition;
+    [SerializeField] int timeLimit = 20;
 
     private int stageIndex = 1;
     private bool isUseDrug = false;
@@ -16,6 +17,7 @@ public class MapManager : Manager
     {
         cameraTrans.position = new Vector3(0f, 10f, -10f);
         cameraTrans.DOMoveY(0f, 1f).SetEase(Ease.OutCubic);
+        StartCoroutine(CheckTime());
     }
 
     public void LoadNextStage()
@@ -23,6 +25,7 @@ public class MapManager : Manager
         if (stageIndex > 3) //TODO:
         {
             StartCoroutine(EndGame());
+
             return;
         }
 
@@ -46,6 +49,8 @@ public class MapManager : Manager
         MovePlayer();
 
         stageIndex++;
+        StopCoroutine("CheckTime");
+        StartCoroutine(CheckTime());
     }
 
     private void ResetStage()
@@ -73,4 +78,19 @@ public class MapManager : Manager
 
         Base.LoadScene(SceneName.Title);
     }
+
+    #region Time
+    private IEnumerator CheckTime()
+    {
+        float time = timeLimit;
+        while (time > 0f)
+        {
+            time -= Time.deltaTime;
+            Base.Manager.UI.SetTime(time / timeLimit);
+            yield return null;
+        }
+
+        Base.Manager.UI.FadeInOut(ResetStage);
+    }
+    #endregion
 }
