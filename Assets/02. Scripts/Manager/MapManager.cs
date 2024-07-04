@@ -71,6 +71,11 @@ public class MapManager : Manager
         player.GravityScale = _value * _value;
     }
 
+    public void SetInvincible(bool _isInvincible)
+    {
+        player.Invincible = _isInvincible;
+    }
+
     private void InitStage()
     {
         if (isUseDrug)
