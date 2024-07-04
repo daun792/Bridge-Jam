@@ -29,7 +29,7 @@ public class CharacterBase : MonoBehaviour
     protected Rigidbody2D characterRigidbody;
     protected Collider2D characterCollider;
     protected SpriteRenderer characterSpriteRenderer;
-    //protected Animator characterAnimator;
+    protected Animator characterAnimator;
     protected CharacterBase focusedCharacter;
 
     private Transform currentFloor;
@@ -64,7 +64,7 @@ public class CharacterBase : MonoBehaviour
         characterRigidbody = GetComponentInChildren<Rigidbody2D>();
         characterCollider = GetComponentInChildren<Collider2D>();
         characterSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        //characterAnimator = GetComponentInChildren<Animator>();
+        characterAnimator = GetComponentInChildren<Animator>();
     }
 
     protected virtual void Update()
@@ -86,7 +86,7 @@ public class CharacterBase : MonoBehaviour
         {
             velocity.y = 0;
         }
-        /*
+        
         characterAnimator.SetFloat(animatorCharacterSpeedName, value > 0 ? value : -value);
         if (characterState == CharacterState.OnGround)
         {
@@ -96,7 +96,7 @@ public class CharacterBase : MonoBehaviour
         {
             characterAnimator.speed = 1;
         }
-        */
+        
         if (value == 0)
         {
             characterRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
@@ -161,7 +161,7 @@ public class CharacterBase : MonoBehaviour
     {
         if (!onGround)
         {
-            //characterAnimator.SetTrigger(animatorInAirName);
+            characterAnimator.SetTrigger(animatorInAirName);
             characterState = CharacterState.InAir;
         }
     }
@@ -171,10 +171,15 @@ public class CharacterBase : MonoBehaviour
         EffectedByGravity();
         if (onGround)
         {
-            //characterAnimator.SetTrigger(animatorOnGroundName);
+            characterAnimator.SetTrigger(animatorOnGroundName);
             characterState = CharacterState.OnGround;
             gravity.y = 0;
         }
+    }
+
+    public virtual void SetAnimator(RuntimeAnimatorController controller)
+    {
+        characterAnimator.runtimeAnimatorController = controller;
     }
 
     protected void MakeImmobile(bool rememberVelocity = true)
@@ -182,7 +187,7 @@ public class CharacterBase : MonoBehaviour
         characterRigidbody.isKinematic = true;
         characterRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
         pausedVelocity = rememberVelocity ? pausedVelocity : Vector2.zero;
-        //characterAnimator.enabled = false;
+        characterAnimator.enabled = false;
         StopOnPosition();
     }
 
@@ -191,13 +196,13 @@ public class CharacterBase : MonoBehaviour
         characterRigidbody.isKinematic = false;
         characterRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
         characterRigidbody.velocity = pausedVelocity;
-        //characterAnimator.enabled = true;
+        characterAnimator.enabled = true;
     }
 
     private void StopOnPosition()
     {
         velocity = Vector2.zero;
-        //characterAnimator.SetFloat(animatorCharacterSpeedName, 0);
+        characterAnimator.SetFloat(animatorCharacterSpeedName, 0);
     }
 
     private void CheckFloorExist()

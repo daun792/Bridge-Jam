@@ -8,6 +8,7 @@ public class MapManager : Manager
     [SerializeField] Transform cameraTrans;
     [SerializeField] Transform playerTrans;
     [SerializeField] Transform[] stageStartPosition;
+    [SerializeField] RuntimeAnimatorController[] animators;
     [SerializeField] int timeLimit = 30;
 
     private int stageIndex = 1;
@@ -52,6 +53,11 @@ public class MapManager : Manager
         isUseDrug = true;
     }
 
+    public void ChangeState(FaceType _state)
+    {
+        player.SetAnimator(animators[(int)_state]);
+    }
+
     private void InitStage()
     {
         if (isUseDrug)
@@ -93,9 +99,11 @@ public class MapManager : Manager
         {
             case 1:
                 Base.Manager.PostProcessing.SetSaturation(-30f);
+                //Base.Manager.UI.FaceChange(FaceType.Delight);
                 break;
             case 2:
                 ModifyPlayerSpeed(0.8f);
+                //Base.Manager.UI.FaceChange(FaceType.Hallucinated);
                 break;
             case 3:
                 timeLimit = 18;
@@ -127,7 +135,7 @@ public class MapManager : Manager
         float inv = 1f / _value;
         player.MovementSpeed = _value;
         player.JumpVelocity = inv;
-        player.GravityScale = inv * inv;
+        player.GravityScale = _value * _value;
     }
 
     private void RotateSight(bool _isRotated)
