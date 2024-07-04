@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEditor.ShaderGraph.Internal;
 
 public class UIManager : Manager
 {
     [SerializeField] Image blackBlur;
+    [SerializeField] Image faceImg;
+    [SerializeField] Slider tiemSlider;
+    [SerializeField] Image[] itemImgs;
+    [SerializeField] Sprite[] faceSprites;
+    [SerializeField] Sprite[] itemSprites;
 
     protected override void Awake()
     {
@@ -90,6 +96,35 @@ public class UIManager : Manager
                 _midEvent?.Invoke();
                 FadeOut();
             });
+    }
+    #endregion
+
+    #region Face Change
+    public enum FaceType
+    {
+        Normal = 0,
+        Happy,
+        Hallucinated,
+    }
+
+    public void FaceChange(FaceType _type)
+    {
+        faceImg.sprite = faceSprites[(int)_type];
+    }
+    #endregion
+
+    #region Time
+    public void SetTime(float _time)
+    { 
+        _time = Mathf.Clamp(_time, 0f, 1f);
+        tiemSlider.value = _time;
+    }
+    #endregion
+
+    #region Items
+    public void ActiveItemObtained(int _index)
+    {
+        itemImgs[_index].sprite = itemSprites[_index];
     }
     #endregion
 }
