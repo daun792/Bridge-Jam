@@ -8,23 +8,25 @@ public class MapManager : Manager
     [SerializeField] Transform cameraTrans;
     [SerializeField] Transform playerTrans;
     [SerializeField] Transform[] stageStartPosition;
-    [SerializeField] int timeLimit = 20;
+    [SerializeField] int timeLimit = 30;
 
     private int stageIndex = 1;
     private bool isUseDrug = false;
     private IEnumerator timeCheckRoutine;
+    private CharacterBase player;
 
     private void Start()
     {
         cameraTrans.position = new Vector3(0f, 10f, -10f);
         cameraTrans.DOMoveY(0f, 1f).SetEase(Ease.OutCubic);
+        player = playerTrans.GetComponent<CharacterBase>();
         timeCheckRoutine = CheckTime();
         StartCoroutine(timeCheckRoutine);
     }
 
     public void LoadNextStage()
     {
-        if (stageIndex > 3) //TODO:
+        if (stageIndex > 6) //TODO:
         {
             StartCoroutine(EndGame());
 
@@ -36,7 +38,7 @@ public class MapManager : Manager
 
     public void ReloadStage()
     {
-        if (stageIndex > 3) //TODO:
+        if (stageIndex > 6) //TODO:
         {
             StartCoroutine(EndGame());
             return;
@@ -90,12 +92,29 @@ public class MapManager : Manager
         switch (stageIndex)
         {
             case 1:
-                Base.Manager.PostProcessing.SetSaturation(-100f);
+                Base.Manager.PostProcessing.SetSaturation(-30f);
                 break;
-            default:
-                Base.Manager.PostProcessing.SetSaturation(0f);
+            case 2:
+                ModifyPlayerSpeed(0.8f);
+                break;
+            case 3:
+                timeLimit = 18;
+                break;
+            case 4:
+                Base.Manager.PostProcessing.SetLensDistortion();
+                break;
+            case 6:
+                Base.Manager.PostProcessing.SetFlashBack();
                 break;
         }
+    }
+
+    private void ModifyPlayerSpeed(float _value)
+    {
+        float inv = 1f / _value;
+        player.MovementSpeed = _value;
+        player.JumpVelocity = inv;
+        player.GravityScale = inv * inv;
     }
 
     private IEnumerator EndGame()
