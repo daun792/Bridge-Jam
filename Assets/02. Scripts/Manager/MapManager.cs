@@ -122,31 +122,40 @@ public class MapManager : Manager
         {
             case 1:
                 Base.Manager.PostProcessing.SetSaturation(-30f);
-                //Base.Manager.UI.FaceChange(FaceType.Delight);
                 break;
             case 2:
                 ModifyPlayerSpeed(0.8f);
-                //Base.Manager.UI.FaceChange(FaceType.Hallucinated);
                 break;
             case 3:
+                ModifyPlayerSpeed(0.8f);
                 timeLimit = 18;
                 break;
             case 4:
+                ModifyPlayerSpeed(0.8f);
                 Base.Manager.PostProcessing.SetLensDistortion();
                 break;
+            case 5:
+                ModifyPlayerSpeed(0.8f);
+                Base.Manager.PostProcessing.SetSaturation(-60f);
+                break;
             case 6:
+                ModifyPlayerSpeed(0.8f);
                 Base.Manager.PostProcessing.SetFlashBack();
                 break;
             case 7:
-                StartCoroutine(GetBackToPreviousPlace(2f));
-                StartCoroutine(GetBackToPreviousPlace(3f));
-                StartCoroutine(GetBackToPreviousPlace(3.5f));
-                StartCoroutine(GetBackToPreviousPlace(5f));
+                ModifyPlayerSpeed(0.8f);
+                SetTimeBacking();
                 break;
             case 8:
+                ModifyPlayerSpeed(0.8f);
+                SetTimeBacking();
                 RotateSight(true);
+                Base.Manager.PostProcessing.SetSaturation(-90f);
                 break;
             case 9:
+                ModifyPlayerSpeed(0.8f);
+                SetTimeBacking();
+                RotateSight(false);
                 StartCoroutine(WindowLotationLoop());
                 break;
 
@@ -162,6 +171,14 @@ public class MapManager : Manager
     private void RotateSight(bool _isRotated)
     {
         Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, _isRotated ? 180f : 0f);
+    }
+
+    private void SetTimeBacking()
+    {
+        StartCoroutine(GetBackToPreviousPlace(2f));
+        StartCoroutine(GetBackToPreviousPlace(3f));
+        StartCoroutine(GetBackToPreviousPlace(3.5f));
+        StartCoroutine(GetBackToPreviousPlace(5f));
     }
 
     private IEnumerator EndGame()
