@@ -4,7 +4,9 @@ using DG.Tweening;
 public enum SceneName
 {
     Title,
-    Game
+    Game,
+    TrueEnd,
+    BadEnd
 }
 
 public class Base : Singleton<Base>

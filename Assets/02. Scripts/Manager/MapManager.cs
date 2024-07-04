@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,47 +8,127 @@ public class MapManager : Manager
 {
     [SerializeField] Transform cameraTrans;
     [SerializeField] Transform playerTrans;
-    [SerializeField] Transform[] stageStartPosition;
+
     [SerializeField] RuntimeAnimatorController[] animators;
     [SerializeField] int timeLimit = 30;
 
-    private int stageIndex = 1;
+    private List<StageBase> stages;
+    public StageBase currStage;
+
+    private int stageIndex = 0;
+    private int debuffIndex = 0;
+
     private int drugCount = 0;
-    private bool isUseDrug = false;
+    public bool IsClean => drugCount <= 0;
+
+    private IEnumerator backToPreviousPlace;
     private IEnumerator timeCheckRoutine;
     private CharacterBase player;
 
+    private Camera cam;
+
     private void Start()
     {
-        //cameraTrans.position = new Vector3(0f, 10f, -10f);
-        //cameraTrans.DOMoveY(0f, 1f).SetEase(Ease.OutCubic);
+        stages = GetComponentsInChildren<StageBase>().ToList();
         player = playerTrans.GetComponent<CharacterBase>();
-        timeCheckRoutine = CheckTime();
-        //StartCoroutine(timeCheckRoutine);
+        cam = cameraTrans.GetComponent<Camera>();
+
+        LoadStage();
+
+        cameraTrans.position = new Vector3(0f, 10f, -10f);
+        cameraTrans.DOMoveY(0f, 1f).SetEase(Ease.OutCubic);
     }
 
-    public void LoadNextStage()
+    public void LoadStage()
     {
-        if (stageIndex > 6) //TODO:
-        {
-            StartCoroutine(EndGame());
-
-            return;
-        }
+        stageIndex++;
+        currStage = stages.Find(x => x.StageIndex == stageIndex);
+        currStage.SetStage(IsClean);
 
         Base.Manager.UI.FadeInOut(InitStage);
+
+        SetDrugEffect();
     }
 
     public void ReloadStage()
     {
-        if (stageIndex > 6) //TODO:
+        //Base.Manager.Sound.PlaySFX("SFX_PlayerDead");
+
+        InitStage();
+        currStage.ResetStage();
+    }
+
+    private void InitStage()
+    {
+        MoveCamera();
+        MovePlayer();
+
+        if (timeCheckRoutine != null) 
+            StopCoroutine(timeCheckRoutine);
+        timeCheckRoutine = CheckTime();
+        StartCoroutine(timeCheckRoutine);
+    }
+
+    private void MoveCamera()
+    {
+        var xPos = 50 * stageIndex - 50;
+        var yPos = IsClean ? 0f : -20f;
+        cameraTrans.position = new Vector3(xPos, yPos, -10f);
+    }
+
+    private void MovePlayer()
+    {
+        playerTrans.position = currStage.GetStartPosition();
+    }
+
+    private void SetDrugEffect()
+    {
+        if (IsClean) return;
+
+        switch (stageIndex)
         {
-            StartCoroutine(EndGame());
-            return;
+            case 10:
+                StartCoroutine(WindowLotationLoop());
+                if (debuffIndex + 1 == stageIndex) break;
+                goto case 9;
+
+            case 9:
+                InvertCamera();
+                if (debuffIndex + 1 == stageIndex) break;
+                goto case 8;
+
+            case 8:
+                SetTimeBacking();
+                if (debuffIndex + 1 == stageIndex) break;
+                goto case 7;
+
+            case 7:
+                Base.Manager.PostProcessing.SetFlashBack();
+                if (debuffIndex + 1 == stageIndex) break;
+                goto case 6;
+
+            case 6:
+            case 5:
+                //
+                if (debuffIndex + 1 == stageIndex) break;
+                goto case 4;
+
+            case 4:
+                timeLimit = 18;
+                if (debuffIndex + 1 == stageIndex) break;
+                goto case 3;
+
+            case 3:
+                ModifyPlayerSpeed(0.8f);
+                if (debuffIndex + 1 == stageIndex) break;
+                goto case 2;
+
+            case 2:
+                Base.Manager.PostProcessing.SetSaturation(-30f);
+                break;
         }
 
-        Base.Manager.Sound.PlaySFX("SFX_PlayerDead");
-        Base.Manager.UI.FadeInOut(ResetStage);
+        debuffIndex = stageIndex;
     }
 
     public void UseDrug()
@@ -55,12 +136,16 @@ public class MapManager : Manager
         if (drugCount >= 8)
         {
             Base.Manager.Sound.PlaySFX("SFX_GetItem_Sick");
+            Base.Manager.UI.FaceChange(FaceType.Hallucinated);
         }
         else
         {
             Base.Manager.Sound.PlaySFX("SFX_GetItem");
+            Base.Manager.UI.FaceChange(FaceType.Delight);
         }
-        isUseDrug = true;
+
+        drugCount++;
+        currStage.UseDrug();
     }
 
     public void ChangeState(FaceType _state)
@@ -90,142 +175,68 @@ public class MapManager : Manager
         player.Invincible = _isInvincible;
     }
 
-    private void InitStage()
+    private void InvertCamera() 
     {
-        if (isUseDrug)
-        {
-            SetDrugEffect();
-        }
+        Matrix4x4 mat = cam.projectionMatrix;
+        mat *= Matrix4x4.Scale(new Vector3(1, -1, 1));
 
-        MoveCamera();
-        MovePlayer();
-
-        stageIndex++;
-        StopCoroutine(timeCheckRoutine);
-        timeCheckRoutine = CheckTime();
-        StartCoroutine(timeCheckRoutine);
-        isUseDrug = false;
+        cam.projectionMatrix = mat;
     }
 
-    private void ResetStage()
-    {
-        stageIndex--;
-        isUseDrug = false;
-        InitStage();
-    }
 
-    private void MoveCamera()
-    {
-        var xPos = 30 * stageIndex;
-        cameraTrans.position = new Vector3(xPos, 0f, -10f);
-    }
 
-    private void MovePlayer()
-    {
-        playerTrans.position = stageStartPosition[stageIndex].position;
-    }
 
-    private void SetDrugEffect()
-    {
-        ModifyPlayerSpeed(1f);
-        SetInvincible(false);
-        drugCount++;
-        if (drugCount == 8)
-        {
-            Base.Manager.UI.FaceChange(FaceType.Hallucinated);
-        }
-        else if (drugCount == 5)
-        {
-            Base.Manager.UI.FaceChange(FaceType.Delight);
-        }
-        switch (stageIndex)
-        {
-            case 1:
-                Base.Manager.PostProcessing.SetSaturation(-30f);
-                break;
-            case 2:
-                ModifyPlayerSpeed(0.8f);
-                break;
-            case 3:
-                ModifyPlayerSpeed(0.8f);
-                timeLimit = 18;
-                break;
-            case 4:
-                ModifyPlayerSpeed(0.8f);
-                Base.Manager.PostProcessing.SetLensDistortion();
-                break;
-            case 5:
-                ModifyPlayerSpeed(0.8f);
-                Base.Manager.PostProcessing.SetSaturation(-60f);
-                break;
-            case 6:
-                ModifyPlayerSpeed(0.8f);
-                Base.Manager.PostProcessing.SetFlashBack();
-                break;
-            case 7:
-                ModifyPlayerSpeed(0.8f);
-                SetTimeBacking();
-                break;
-            case 8:
-                ModifyPlayerSpeed(0.8f);
-                SetTimeBacking();
-                RotateSight(true);
-                Base.Manager.PostProcessing.SetSaturation(-90f);
-                break;
-            case 9:
-                ModifyPlayerSpeed(0.8f);
-                SetTimeBacking();
-                RotateSight(false);
-                StartCoroutine(WindowLotationLoop());
-                break;
 
-        }
-    }
 
-    private void ModifyPlayerSpeed(float _value)
+    public void ModifyPlayerSpeed(float _value)
     {
         ChangeSpeed(_value);
         ChangeJumpRange(_value);
     }
 
-    private void RotateSight(bool _isRotated)
-    {
-        Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, _isRotated ? 180f : 0f);
-    }
-
     private void SetTimeBacking()
     {
-        StartCoroutine(GetBackToPreviousPlace(2f));
-        StartCoroutine(GetBackToPreviousPlace(3f));
-        StartCoroutine(GetBackToPreviousPlace(3.5f));
-        StartCoroutine(GetBackToPreviousPlace(5f));
+        backToPreviousPlace = GetBackToPreviousPlace();
+        StartCoroutine(backToPreviousPlace);
     }
 
-    private IEnumerator EndGame()
+    public void StopTimeBacking()
     {
-        Base.Manager.UI.FadeIn();
-
-        yield return new WaitForSeconds(1f);
-
-        Base.LoadScene(SceneName.Title);
+        StopCoroutine(backToPreviousPlace);
     }
 
-    private IEnumerator GetBackToPreviousPlace(float time)
+    private IEnumerator GetBackToPreviousPlace()
     {
-        yield return new WaitForSeconds(time - 0.5f);
-        Vector2 pos = playerTrans.position;
-        yield return new WaitForSeconds(0.5f);
-        playerTrans.position = pos;
+        float interval = Random.Range(3f, 10f);
+
+        while (true)
+        {
+            yield return new WaitForSeconds(interval - 0.5f);
+
+            Vector2 pos = playerTrans.position;
+
+            yield return new WaitForSeconds(0.5f);
+
+            playerTrans.position = pos;
+            interval = Random.Range(2f, 7f);
+        }
     }
 
     private IEnumerator WindowLotationLoop()
     {
+        Matrix4x4 mat = cam.projectionMatrix;
+        var invertXMat = mat * Matrix4x4.Scale(new Vector3(-1, -1, 1));
+        var invertYMat = mat * Matrix4x4.Scale(new Vector3(1, -1, 1));
+
         while (true) //change condition later
         {
             yield return new WaitForSeconds(1.5f);
-            RotateSight(true);
+
+            cam.projectionMatrix = invertXMat;
+
             yield return new WaitForSeconds(0.5f);
-            RotateSight(false);
+
+            cam.projectionMatrix = invertYMat;
         }
     }
 
@@ -240,7 +251,7 @@ public class MapManager : Manager
             yield return null;
         }
 
-        Base.Manager.UI.FadeInOut(ResetStage);
+        Base.Manager.UI.FadeInOut(ReloadStage);
     }
     #endregion
 }
