@@ -1,4 +1,5 @@
 using System;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class CharacterBase : MonoBehaviour
@@ -30,7 +31,17 @@ public class CharacterBase : MonoBehaviour
     protected SpriteRenderer characterSpriteRenderer;
     //protected Animator characterAnimator;
     protected CharacterBase focusedCharacter;
-    protected GameObject CurrentFloor;
+
+    private Transform currentFloor;
+    protected Transform CurrentFloor
+    {
+        get => currentFloor;
+        set
+        {
+            transform.SetParent(value);
+            currentFloor = value;
+        }
+    }
 
     private float speedCoefficient = 4f;
     private float jumpVelocityCoefficient = 14.4f;
@@ -207,7 +218,7 @@ public class CharacterBase : MonoBehaviour
 
             if (hit.collider != null)
             {
-                CurrentFloor = hit.collider.gameObject;
+                CurrentFloor = hit.collider.transform;
                 groundNormal = hit.normal;
                 angle = Vector2.Angle(groundNormal, Vector2.up);
                 onSlope = angle != 0;
@@ -218,5 +229,18 @@ public class CharacterBase : MonoBehaviour
         CurrentFloor = null;
         onSlope = false;
         onGround = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(
+            characterCollider.bounds.center + Vector3.up * characterCollider.bounds.size.y * 0.55f,
+            Vector2.up,
+            characterCollider.bounds.size.y * 0.55f,
+            ~0);
+        if (hit.collider != null && hit.collider.gameObject != gameObject)
+        {
+            gravity.y = 0;
+        }
     }
 }
