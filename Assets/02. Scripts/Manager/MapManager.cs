@@ -12,6 +12,7 @@ public class MapManager : Manager
     [SerializeField] int timeLimit = 30;
 
     private int stageIndex = 1;
+    private int drugCount = 0;
     private bool isUseDrug = false;
     private IEnumerator timeCheckRoutine;
     private CharacterBase player;
@@ -58,6 +59,18 @@ public class MapManager : Manager
         player.SetAnimator(animators[(int)_state]);
     }
 
+    public void ChangeSpeed(float _value)
+    {
+        player.MovementSpeed = _value;
+    }
+
+    public void ChangeJumpRange(float _value)
+    {
+        float inv = 1f / _value;
+        player.JumpVelocity = inv;
+        player.GravityScale = _value * _value;
+    }
+
     private void InitStage()
     {
         if (isUseDrug)
@@ -95,6 +108,16 @@ public class MapManager : Manager
 
     private void SetDrugEffect()
     {
+        ModifyPlayerSpeed(1f);
+        drugCount++;
+        if (drugCount == 8)
+        {
+            Base.Manager.UI.FaceChange(FaceType.Hallucinated);
+        }
+        else if (drugCount == 5)
+        {
+            Base.Manager.UI.FaceChange(FaceType.Delight);
+        }
         switch (stageIndex)
         {
             case 1:
@@ -132,10 +155,8 @@ public class MapManager : Manager
 
     private void ModifyPlayerSpeed(float _value)
     {
-        float inv = 1f / _value;
-        player.MovementSpeed = _value;
-        player.JumpVelocity = inv;
-        player.GravityScale = _value * _value;
+        ChangeSpeed(_value);
+        ChangeJumpRange(_value);
     }
 
     private void RotateSight(bool _isRotated)
