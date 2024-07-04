@@ -80,6 +80,11 @@ public class MapManager : Manager
         player.GravityScale = _value * _value;
     }
 
+    public void ChangeJumpHeight(float _value)
+    {
+        player.JumpVelocity = _value;
+    }
+
     public void SetInvincible(bool _isInvincible)
     {
         player.Invincible = _isInvincible;
@@ -123,6 +128,7 @@ public class MapManager : Manager
     private void SetDrugEffect()
     {
         ModifyPlayerSpeed(1f);
+        SetInvincible(false);
         drugCount++;
         if (drugCount == 8)
         {
