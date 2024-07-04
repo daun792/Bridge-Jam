@@ -12,6 +12,7 @@ public class MapManager : Manager
     [SerializeField] int timeLimit = 30;
 
     private int stageIndex = 1;
+    private int drugCount = 0;
     private bool isUseDrug = false;
     private IEnumerator timeCheckRoutine;
     private CharacterBase player;
@@ -58,6 +59,18 @@ public class MapManager : Manager
         player.SetAnimator(animators[(int)_state]);
     }
 
+    public void ChangeSpeed(float _value)
+    {
+        player.MovementSpeed = _value;
+    }
+
+    public void ChangeJumpRange(float _value)
+    {
+        float inv = 1f / _value;
+        player.JumpVelocity = inv;
+        player.GravityScale = _value * _value;
+    }
+
     private void InitStage()
     {
         if (isUseDrug)
@@ -95,35 +108,54 @@ public class MapManager : Manager
 
     private void SetDrugEffect()
     {
+        ModifyPlayerSpeed(1f);
+        drugCount++;
+        if (drugCount == 8)
+        {
+            Base.Manager.UI.FaceChange(FaceType.Hallucinated);
+        }
+        else if (drugCount == 5)
+        {
+            Base.Manager.UI.FaceChange(FaceType.Delight);
+        }
         switch (stageIndex)
         {
             case 1:
                 Base.Manager.PostProcessing.SetSaturation(-30f);
-                //Base.Manager.UI.FaceChange(FaceType.Delight);
                 break;
             case 2:
                 ModifyPlayerSpeed(0.8f);
-                //Base.Manager.UI.FaceChange(FaceType.Hallucinated);
                 break;
             case 3:
+                ModifyPlayerSpeed(0.8f);
                 timeLimit = 18;
                 break;
             case 4:
+                ModifyPlayerSpeed(0.8f);
                 Base.Manager.PostProcessing.SetLensDistortion();
                 break;
+            case 5:
+                ModifyPlayerSpeed(0.8f);
+                Base.Manager.PostProcessing.SetSaturation(-60f);
+                break;
             case 6:
+                ModifyPlayerSpeed(0.8f);
                 Base.Manager.PostProcessing.SetFlashBack();
                 break;
             case 7:
-                StartCoroutine(GetBackToPreviousPlace(2f));
-                StartCoroutine(GetBackToPreviousPlace(3f));
-                StartCoroutine(GetBackToPreviousPlace(3.5f));
-                StartCoroutine(GetBackToPreviousPlace(5f));
+                ModifyPlayerSpeed(0.8f);
+                SetTimeBacking();
                 break;
             case 8:
+                ModifyPlayerSpeed(0.8f);
+                SetTimeBacking();
                 RotateSight(true);
+                Base.Manager.PostProcessing.SetSaturation(-90f);
                 break;
             case 9:
+                ModifyPlayerSpeed(0.8f);
+                SetTimeBacking();
+                RotateSight(false);
                 StartCoroutine(WindowLotationLoop());
                 break;
 
@@ -132,15 +164,21 @@ public class MapManager : Manager
 
     private void ModifyPlayerSpeed(float _value)
     {
-        float inv = 1f / _value;
-        player.MovementSpeed = _value;
-        player.JumpVelocity = inv;
-        player.GravityScale = _value * _value;
+        ChangeSpeed(_value);
+        ChangeJumpRange(_value);
     }
 
     private void RotateSight(bool _isRotated)
     {
         Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, _isRotated ? 180f : 0f);
+    }
+
+    private void SetTimeBacking()
+    {
+        StartCoroutine(GetBackToPreviousPlace(2f));
+        StartCoroutine(GetBackToPreviousPlace(3f));
+        StartCoroutine(GetBackToPreviousPlace(3.5f));
+        StartCoroutine(GetBackToPreviousPlace(5f));
     }
 
     private IEnumerator EndGame()
