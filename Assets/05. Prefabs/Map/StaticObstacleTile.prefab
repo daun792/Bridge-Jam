@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2765807220078273620}
   - component: {fileID: 3771954907693627497}
   - component: {fileID: 5436472392079883432}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StaticObstacleTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

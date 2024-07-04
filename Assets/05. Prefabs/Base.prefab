@@ -354,6 +354,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 86b4c090b4de2534caa4587597b0103f, type: 3}
   - name: SFX_DisappearTile_2
     clip: {fileID: 8300000, guid: 0c20b03ea8f803940ab39dbdad9fcdb4, type: 3}
+  - name: SFX_PlayerDead
+    clip: {fileID: 8300000, guid: e947f6f2adf80654690e2a83c8f01484, type: 3}
+  - name: SFX_PlayerJump
+    clip: {fileID: 8300000, guid: 2eb1afb21b605a641bac38263cdab868, type: 3}
+  - name: SFX_GetItem
+    clip: {fileID: 8300000, guid: f3776050bea70bc4fa1a8077bcef7a93, type: 3}
+  - name: SFX_GetItem_Sick
+    clip: {fileID: 8300000, guid: 597358d3a9a6b8a489cc449151d8e442, type: 3}
   bgmPlayer: {fileID: 2943895315533101109}
   sfxPlayer: {fileID: 2943895316047845756}
   mixer: {fileID: 24100000, guid: 3078b9a3d9fab494c914d0f39d348e50, type: 2}

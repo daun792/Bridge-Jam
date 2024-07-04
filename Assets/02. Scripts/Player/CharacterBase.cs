@@ -119,6 +119,7 @@ public class CharacterBase : MonoBehaviour
 
     public virtual void Jump()
     {
+        Base.Manager.Sound.PlaySFX("SFX_PlayerJump");
         gravity.y = JumpVelocity * GravityScale * jumpVelocityCoefficient;
     }
 
@@ -240,12 +241,14 @@ public class CharacterBase : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         RaycastHit2D hit = Physics2D.Raycast(
-            characterCollider.bounds.center + Vector3.up * characterCollider.bounds.size.y * 0.55f,
+            characterCollider.bounds.center + Vector3.up * characterCollider.bounds.size.y * 0.4f,
             Vector2.up,
             characterCollider.bounds.size.y * 0.55f,
-            ~0);
-        if (hit.collider != null && hit.collider.gameObject != gameObject)
+            ~0 - 1);
+        Debug.DrawRay(characterCollider.bounds.center + Vector3.up * characterCollider.bounds.size.y * 0.55f, Vector2.up * characterCollider.bounds.size.y * 0.55f, Color.red, 1f);
+        if (hit.collider != null)
         {
+            Debug.Log(hit.collider.gameObject);
             gravity.y = 0;
         }
     }
