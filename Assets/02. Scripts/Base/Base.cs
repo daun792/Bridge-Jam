@@ -12,6 +12,7 @@ public class Base : Singleton<Base>
     private readonly SoundManager sound;
     private readonly UIManager ui;
     private readonly MapManager map;
+    private readonly PostProcessingManager postProcessing;
     private readonly SettingData setting;
 
     public partial class Manager
@@ -19,6 +20,7 @@ public class Base : Singleton<Base>
         public static SoundManager Sound => instance.sound;
         public static UIManager UI => instance.ui;
         public static MapManager Map => instance.map;
+        public static PostProcessingManager PostProcessing => instance.postProcessing;
     }
 
     public class Data
