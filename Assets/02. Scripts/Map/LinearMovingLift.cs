@@ -16,7 +16,7 @@ public class LinearMovingLift : MonoBehaviour
 
     private void MoveToNextPoint()
     {
-        transform.DOMove(waypoints[currentWaypointIndex].position, moveTime).
+        transform.DOMove(waypoints[currentWaypointIndex].position, moveTime).SetEase(Ease.Linear).
             OnComplete(() => MoveToNextPoint());
         currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
     }
