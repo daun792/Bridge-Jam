@@ -29,12 +29,29 @@ public class MapManager : Manager
         Base.Manager.UI.FadeInOut(InitStage);
     }
 
+    public void ReloadStage()
+    {
+        if (stageIndex > 3) //TODO:
+        {
+            StartCoroutine(EndGame());
+            return;
+        }
+
+        Base.Manager.UI.FadeInOut(ResetStage);
+    }
+
     private void InitStage()
     {
         MoveCamera();
         MovePlayer();
 
         stageIndex++;
+    }
+
+    private void ResetStage()
+    {
+        stageIndex--;
+        InitStage();
     }
 
     private void MoveCamera()
