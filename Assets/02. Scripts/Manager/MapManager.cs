@@ -46,11 +46,20 @@ public class MapManager : Manager
             return;
         }
 
+        Base.Manager.Sound.PlaySFX("SFX_PlayerDead");
         Base.Manager.UI.FadeInOut(ResetStage);
     }
 
     public void UseDrug()
     {
+        if (drugCount >= 8)
+        {
+            Base.Manager.Sound.PlaySFX("SFX_GetItem_Sick");
+        }
+        else
+        {
+            Base.Manager.Sound.PlaySFX("SFX_GetItem");
+        }
         isUseDrug = true;
     }
 
@@ -69,6 +78,11 @@ public class MapManager : Manager
         float inv = 1f / _value;
         player.JumpVelocity = inv;
         player.GravityScale = _value * _value;
+    }
+
+    public void ChangeJumpHeight(float _value)
+    {
+        player.JumpVelocity = _value;
     }
 
     public void SetInvincible(bool _isInvincible)
@@ -114,6 +128,7 @@ public class MapManager : Manager
     private void SetDrugEffect()
     {
         ModifyPlayerSpeed(1f);
+        SetInvincible(false);
         drugCount++;
         if (drugCount == 8)
         {
