@@ -16,7 +16,6 @@ public class CharacterBase : MonoBehaviour
     public float MovementSpeed = 1;
     public float JumpVelocity = 1;
     public float GravityScale = 1;
-    public float followingDistance = 1;
     public LayerMask groundMask;
 
     public bool IsFlip

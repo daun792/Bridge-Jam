@@ -20,4 +20,16 @@ public class PostProcessingManager : Manager
         volume.profile.TryGet(out UnityEngine.Rendering.Universal.ColorAdjustments colorAdjustments);
         colorAdjustments.saturation.value = _value;
     }
+
+    public void SetLensDistortion()
+    {
+        volume.profile.TryGet(out UnityEngine.Rendering.Universal.LensDistortion lensDistortion);
+        lensDistortion.intensity.value = -0.5f;
+    }
+
+    public void SetFlashBack()
+    {
+        volume.profile.TryGet(out UnityEngine.Rendering.Universal.ChromaticAberration chromaticAberration);
+        chromaticAberration.intensity.value = 0.5f;
+    }
 }
