@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01. Scenes/02. Game.unity
     guid: c68275834b4cce54ebe7635c7fcb131f
+  - enabled: 1
+    path: Assets/01. Scenes/03. TrueEnd.unity
+    guid: 7c72e2803dadafb42913d9ce676961d8
+  - enabled: 1
+    path: Assets/01. Scenes/04. BadEnd.unity
+    guid: e9180997ba986b94ab5822cb6f3d60d3
   m_configObjects: {}
