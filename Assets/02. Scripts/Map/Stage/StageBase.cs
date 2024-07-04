@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class StageBase : MonoBehaviour
+public abstract class StageBase : MonoBehaviour
 {
     [Serializable]
     struct StageComposition
@@ -14,10 +14,10 @@ public class StageBase : MonoBehaviour
     [SerializeField] StageComposition cleanStage;
     [SerializeField] StageComposition drugStage;
 
-    private bool isClean = true;
+    protected bool isClean = true;
     private StageComposition currStage;
 
-    public int StageIndex;
+    public int StageIndex { get; protected set; }
 
     private void Awake()
     {
@@ -43,7 +43,7 @@ public class StageBase : MonoBehaviour
     {
         if (currStage.disappearTileParent != null)
         {
-            var disappearTiles = currStage.disappearTileParent.GetComponentsInChildren<SpriteRenderer>();
+            var disappearTiles = currStage.disappearTileParent.GetComponentsInChildren<SpriteRenderer>(true);
             var fullAlpha = new Color(0f, 0f, 0f, 1f);
 
             foreach (var tile in disappearTiles)
@@ -54,17 +54,5 @@ public class StageBase : MonoBehaviour
         }
     }
 
-    public virtual void UseDrug()
-    {
-
-    }
-
-    
-   
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract void UseDrug();
 }

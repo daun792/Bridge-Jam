@@ -41,17 +41,18 @@ public class MapManager : Manager
         currStage = stages.Find(x => x.StageIndex == stageIndex);
   
         currStage.SetStage(IsClean);
-        SetDrugEffect();
-
-        SetInvincible(false);
 
         Base.Manager.UI.FadeInOut(InitStage);
+
+        SetDrugEffect();
+        SetInvincible(false);
     }
 
     public void ReloadStage()
     {
         //Base.Manager.Sound.PlaySFX("SFX_PlayerDead");
-        Base.Manager.UI.FadeInOut(InitStage);
+
+        InitStage();
         currStage.ResetStage();
     }
 
@@ -60,7 +61,8 @@ public class MapManager : Manager
         MoveCamera();
         MovePlayer();
 
-        StopCoroutine(timeCheckRoutine);
+        if (timeCheckRoutine != null) 
+            StopCoroutine(timeCheckRoutine);
         timeCheckRoutine = CheckTime();
         StartCoroutine(timeCheckRoutine);
     }
@@ -182,7 +184,7 @@ public class MapManager : Manager
         ChangeJumpRange(_value);
     }
 
-    private void RotateSight(bool _isRotated)
+    public void RotateSight(bool _isRotated)
     {
         Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, _isRotated ? 180f : 0f);
     }
@@ -225,7 +227,7 @@ public class MapManager : Manager
             yield return null;
         }
 
-        ReloadStage();
+        Base.Manager.UI.FadeInOut(ReloadStage);
     }
     #endregion
 }

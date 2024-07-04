@@ -14,7 +14,7 @@ public class StaticObstacleTile : MonoBehaviour
             {
                 if (!characterBase.Invincible)
                 {
-                    Base.Manager.Map.ReloadStage();
+                    Base.Manager.UI.FadeInOut(Base.Manager.Map.ReloadStage);
                 }
                 else
                 {
