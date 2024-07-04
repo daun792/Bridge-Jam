@@ -11,6 +11,7 @@ public class Stage6 : StageBase
 
     public override void UseDrug()
     {
-
+        Base.Manager.Map.SetInvincible(true);
+        Base.Manager.PostProcessing.SetFlashBack();
     }
 }

@@ -21,13 +21,17 @@ public class MapManager : Manager
     private int drugCount = 0;
     public bool IsClean => drugCount <= 0;
 
+    private IEnumerator backToPreviousPlace;
     private IEnumerator timeCheckRoutine;
     private CharacterBase player;
+
+    private Camera cam;
 
     private void Start()
     {
         stages = GetComponentsInChildren<StageBase>().ToList();
         player = playerTrans.GetComponent<CharacterBase>();
+        cam = cameraTrans.GetComponent<Camera>();
 
         LoadStage();
 
@@ -39,13 +43,11 @@ public class MapManager : Manager
     {
         stageIndex++;
         currStage = stages.Find(x => x.StageIndex == stageIndex);
-  
         currStage.SetStage(IsClean);
 
         Base.Manager.UI.FadeInOut(InitStage);
 
         SetDrugEffect();
-        SetInvincible(false);
     }
 
     public void ReloadStage()
@@ -91,8 +93,7 @@ public class MapManager : Manager
                 goto case 9;
 
             case 9:
-                Base.Manager.PostProcessing.SetSaturation(-90f);
-                RotateSight(true);
+                InvertCamera();
                 if (debuffIndex + 1 == stageIndex) break;
                 goto case 8;
 
@@ -108,7 +109,7 @@ public class MapManager : Manager
 
             case 6:
             case 5:
-                Base.Manager.PostProcessing.SetLensDistortion();
+                //
                 if (debuffIndex + 1 == stageIndex) break;
                 goto case 4;
 
@@ -174,45 +175,68 @@ public class MapManager : Manager
         player.Invincible = _isInvincible;
     }
 
-    
+    private void InvertCamera() 
+    {
+        Matrix4x4 mat = cam.projectionMatrix;
+        mat *= Matrix4x4.Scale(new Vector3(1, -1, 1));
 
-   
+        cam.projectionMatrix = mat;
+    }
 
-    private void ModifyPlayerSpeed(float _value)
+
+
+
+
+
+    public void ModifyPlayerSpeed(float _value)
     {
         ChangeSpeed(_value);
         ChangeJumpRange(_value);
     }
 
-    public void RotateSight(bool _isRotated)
-    {
-        Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, _isRotated ? 180f : 0f);
-    }
-
     private void SetTimeBacking()
     {
-        StartCoroutine(GetBackToPreviousPlace(2f));
-        StartCoroutine(GetBackToPreviousPlace(3f));
-        StartCoroutine(GetBackToPreviousPlace(3.5f));
-        StartCoroutine(GetBackToPreviousPlace(5f));
+        backToPreviousPlace = GetBackToPreviousPlace();
+        StartCoroutine(backToPreviousPlace);
     }
 
-    private IEnumerator GetBackToPreviousPlace(float time)
+    public void StopTimeBacking()
     {
-        yield return new WaitForSeconds(time - 0.5f);
-        Vector2 pos = playerTrans.position;
-        yield return new WaitForSeconds(0.5f);
-        playerTrans.position = pos;
+        StopCoroutine(backToPreviousPlace);
+    }
+
+    private IEnumerator GetBackToPreviousPlace()
+    {
+        float interval = Random.Range(3f, 10f);
+
+        while (true)
+        {
+            yield return new WaitForSeconds(interval - 0.5f);
+
+            Vector2 pos = playerTrans.position;
+
+            yield return new WaitForSeconds(0.5f);
+
+            playerTrans.position = pos;
+            interval = Random.Range(2f, 7f);
+        }
     }
 
     private IEnumerator WindowLotationLoop()
     {
+        Matrix4x4 mat = cam.projectionMatrix;
+        var invertXMat = mat * Matrix4x4.Scale(new Vector3(-1, -1, 1));
+        var invertYMat = mat * Matrix4x4.Scale(new Vector3(1, -1, 1));
+
         while (true) //change condition later
         {
             yield return new WaitForSeconds(1.5f);
-            RotateSight(true);
+
+            cam.projectionMatrix = invertXMat;
+
             yield return new WaitForSeconds(0.5f);
-            RotateSight(false);
+
+            cam.projectionMatrix = invertYMat;
         }
     }
 

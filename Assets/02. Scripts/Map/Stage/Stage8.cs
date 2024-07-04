@@ -11,6 +11,7 @@ public class Stage8 : StageBase
 
     public override void UseDrug()
     {
-
+        Base.Manager.Map.StopTimeBacking();
+        Base.Manager.Map.ModifyPlayerSpeed(1f);
     }
 }

@@ -25,7 +25,7 @@ public abstract class StageBase : MonoBehaviour
         drugStage.stageParent.SetActive(false);
     }
 
-    public void SetStage(bool _isClean)
+    public virtual void SetStage(bool _isClean)
     {
         isClean = _isClean;
         currStage = _isClean ? cleanStage : drugStage;
@@ -39,7 +39,7 @@ public abstract class StageBase : MonoBehaviour
         false => drugStage.startPosition.position
     };
 
-    public void ResetStage()
+    public virtual void ResetStage()
     {
         if (currStage.disappearTileParent != null)
         {
