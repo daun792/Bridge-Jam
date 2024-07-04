@@ -8,11 +8,9 @@ public class LinearMovingLift : MonoBehaviour
     [SerializeField] float moveTime = 3f;
     [SerializeField] Transform[] waypoints;
     private int currentWaypointIndex = 0;
-    private Rigidbody2D rb;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         MoveToNextPoint();
     }
 

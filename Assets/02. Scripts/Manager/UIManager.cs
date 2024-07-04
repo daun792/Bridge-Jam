@@ -100,16 +100,10 @@ public class UIManager : Manager
     #endregion
 
     #region Face Change
-    public enum FaceType
-    {
-        Normal = 0,
-        Happy,
-        Hallucinated,
-    }
-
     public void FaceChange(FaceType _type)
     {
         faceImg.sprite = faceSprites[(int)_type];
+        Base.Manager.Map.ChangeState(_type);
     }
     #endregion
 

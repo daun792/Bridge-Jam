@@ -8,6 +8,7 @@ public class MapManager : Manager
     [SerializeField] Transform cameraTrans;
     [SerializeField] Transform playerTrans;
     [SerializeField] Transform[] stageStartPosition;
+    [SerializeField] RuntimeAnimatorController[] animators;
     [SerializeField] int timeLimit = 30;
 
     private int stageIndex = 1;
@@ -52,6 +53,11 @@ public class MapManager : Manager
         isUseDrug = true;
     }
 
+    public void ChangeState(FaceType _state)
+    {
+        player.SetAnimator(animators[(int)_state]);
+    }
+
     private void InitStage()
     {
         if (isUseDrug)
@@ -93,9 +99,11 @@ public class MapManager : Manager
         {
             case 1:
                 Base.Manager.PostProcessing.SetSaturation(-30f);
+                //Base.Manager.UI.FaceChange(FaceType.Delight);
                 break;
             case 2:
                 ModifyPlayerSpeed(0.8f);
+                //Base.Manager.UI.FaceChange(FaceType.Hallucinated);
                 break;
             case 3:
                 timeLimit = 18;
@@ -106,6 +114,19 @@ public class MapManager : Manager
             case 6:
                 Base.Manager.PostProcessing.SetFlashBack();
                 break;
+            case 7:
+                StartCoroutine(GetBackToPreviousPlace(2f));
+                StartCoroutine(GetBackToPreviousPlace(3f));
+                StartCoroutine(GetBackToPreviousPlace(3.5f));
+                StartCoroutine(GetBackToPreviousPlace(5f));
+                break;
+            case 8:
+                RotateSight(true);
+                break;
+            case 9:
+                StartCoroutine(WindowLotationLoop());
+                break;
+
         }
     }
 
@@ -114,7 +135,12 @@ public class MapManager : Manager
         float inv = 1f / _value;
         player.MovementSpeed = _value;
         player.JumpVelocity = inv;
-        player.GravityScale = inv * inv;
+        player.GravityScale = _value * _value;
+    }
+
+    private void RotateSight(bool _isRotated)
+    {
+        Camera.main.transform.rotation = Quaternion.Euler(0f, 0f, _isRotated ? 180f : 0f);
     }
 
     private IEnumerator EndGame()
@@ -124,6 +150,25 @@ public class MapManager : Manager
         yield return new WaitForSeconds(1f);
 
         Base.LoadScene(SceneName.Title);
+    }
+
+    private IEnumerator GetBackToPreviousPlace(float time)
+    {
+        yield return new WaitForSeconds(time - 0.5f);
+        Vector2 pos = playerTrans.position;
+        yield return new WaitForSeconds(0.5f);
+        playerTrans.position = pos;
+    }
+
+    private IEnumerator WindowLotationLoop()
+    {
+        while (true) //change condition later
+        {
+            yield return new WaitForSeconds(1.5f);
+            RotateSight(true);
+            yield return new WaitForSeconds(0.5f);
+            RotateSight(false);
+        }
     }
 
     #region Time
