@@ -349,7 +349,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGM: []
-  SFX: []
+  SFX:
+  - name: SFX_DisappearTile_1
+    clip: {fileID: 8300000, guid: 86b4c090b4de2534caa4587597b0103f, type: 3}
+  - name: SFX_DisappearTile_2
+    clip: {fileID: 8300000, guid: 0c20b03ea8f803940ab39dbdad9fcdb4, type: 3}
   bgmPlayer: {fileID: 2943895315533101109}
   sfxPlayer: {fileID: 2943895316047845756}
   mixer: {fileID: 24100000, guid: 3078b9a3d9fab494c914d0f39d348e50, type: 2}
