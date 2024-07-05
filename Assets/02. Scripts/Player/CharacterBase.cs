@@ -21,6 +21,7 @@ public class CharacterBase : MonoBehaviour
     public float JumpVelocity = 1;
     public float GravityScale = 1;
     public LayerMask groundMask;
+    public LayerMask ceilingMask;
     public bool Invincible = false;
 
     public bool IsFlip
@@ -221,7 +222,7 @@ public class CharacterBase : MonoBehaviour
     protected virtual void BehaveInAir()
     {
         EffectedByGravity();
-        if (onGround)
+        if (onGround && velocity.y + gravity.y <= 0)
         {
             characterAnimator.SetTrigger(animatorOnGroundName);
             characterState = CharacterState.OnGround;
@@ -337,7 +338,7 @@ public class CharacterBase : MonoBehaviour
             characterCollider.bounds.center + Vector3.up * characterCollider.bounds.size.y * 0.4f,
             Vector2.up,
             characterCollider.bounds.size.y * 0.55f,
-            ~0 - 1);
+            ceilingMask);
 
         if (hit.collider != null)
         {

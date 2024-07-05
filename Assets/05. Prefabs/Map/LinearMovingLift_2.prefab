@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 640376949813940458}
   - component: {fileID: 2693897873673690061}
   - component: {fileID: 5577958377076895632}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7447356163364489721}
   - component: {fileID: 3625269952113806057}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: LinearMovingLift_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 1965703704206645610}
   - component: {fileID: 3304127054178924910}
   - component: {fileID: 1900242601283579387}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}

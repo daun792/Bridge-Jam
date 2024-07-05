@@ -18,9 +18,13 @@ public class DrowningTile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && IsDrwoning)
         {
-            transform.DOKill();
-            transform.DOMoveY(startPos.y - 0.5f, 1f).SetEase(Ease.OutQuad);
-            isDrowned = true;
+            float half = collision.gameObject.GetComponent<Collider2D>().bounds.size.y * 0.4f;
+            if (collision.transform.position.y - half > transform.position.y)
+            {
+                transform.DOKill();
+                transform.DOMoveY(startPos.y - 0.5f, 1f).SetEase(Ease.OutQuad);
+                isDrowned = true;
+            }
         }
     }
 
