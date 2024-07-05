@@ -69,7 +69,7 @@ public class SoundManager : Manager
 
     [Header("Audio Sources")]
     [SerializeField] AudioSource bgmPlayer = null;
-    [SerializeField] AudioSource sfxPlayer = null;
+    [SerializeField] AudioSource[] sfxPlayer = null;
 
     [Header("Audio Mixer")]
     [SerializeField] AudioMixer mixer;
@@ -79,6 +79,8 @@ public class SoundManager : Manager
 
     private VolumeData BGMData;
     private VolumeData SFXData;
+
+    private int sfxIndex = 0;
 
     [SerializeField] float bgmVolume; //todo
     [SerializeField] float sfxVolume; //todo
@@ -179,19 +181,20 @@ public class SoundManager : Manager
             return;
         }
 
-        sfxPlayer.clip = clip;
+        sfxPlayer[sfxIndex].clip = clip;
 
-        sfxPlayer.Play();
+        sfxPlayer[sfxIndex].Play();
+        sfxIndex = (sfxIndex + 1) % sfxPlayer.Length;
     }
 
     public void StopSFX()
     {
-        sfxPlayer.Stop();
+        sfxPlayer[sfxIndex].Stop();
     }
 
     public bool IsPlayingSFX()
     {
-        return sfxPlayer.isPlaying;
+        return sfxPlayer[sfxIndex].isPlaying;
     }
     #endregion
 
