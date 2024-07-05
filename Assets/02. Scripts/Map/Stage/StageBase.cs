@@ -19,7 +19,7 @@ public abstract class StageBase : MonoBehaviour
 
     public int StageIndex { get; protected set; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         cleanStage.stageParent.SetActive(false);
         drugStage.stageParent.SetActive(false);

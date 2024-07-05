@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Stage10 : StageBase
 {
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
         StageIndex = 10;
     }
 
