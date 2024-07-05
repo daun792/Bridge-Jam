@@ -13,16 +13,22 @@ public abstract class StageBase : MonoBehaviour
 
     [SerializeField] protected StageComposition cleanStage;
     [SerializeField] protected StageComposition drugStage;
+    [SerializeField] int stageIndex;
+    [SerializeField] float stageTime;
 
     protected bool isClean = true;
     private StageComposition currStage;
 
-    public int StageIndex { get; protected set; }
+    public int StageIndex { get; private set; }
+    public float StageTime { get; private set; }
 
     protected virtual void Awake()
     {
         cleanStage.stageParent.SetActive(false);
         drugStage.stageParent.SetActive(false);
+
+        StageIndex = stageIndex;
+        StageTime = stageTime;
     }
 
     public virtual void SetStage(bool _isClean)

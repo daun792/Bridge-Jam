@@ -17,7 +17,7 @@ public class Stage7 : StageBase
     protected override void Awake()
     {
         base.Awake();
-        StageIndex = 7;
+
         drugDrugStage.stageParent.SetActive(false);
     }
 

@@ -7,12 +7,6 @@ public class Stage4 : StageBase
     [SerializeField] DrowningTile[] cleanDrowningTiles;
     [SerializeField] DrowningTile[] drugDrowningTiles;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        StageIndex = 4;
-    }
-
     public override void UseDrug()
     {
         Base.Manager.Map.ChangeJumpSpeed(0.5f);

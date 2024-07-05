@@ -21,7 +21,7 @@ public class Stage10 : StageBase
     protected override void Awake()
     {
         base.Awake();
-        StageIndex = 10;
+
         wait = new(1f);
         cam = cameraTrans.GetComponent<Camera>();
     }

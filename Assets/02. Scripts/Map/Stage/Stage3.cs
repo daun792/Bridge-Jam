@@ -7,12 +7,6 @@ public class Stage3 : StageBase
     [SerializeField] GameObject cleanRainbow;
     [SerializeField] GameObject drugRainbow;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        StageIndex = 3;
-    }
-
     public override void UseDrug()
     {
         Base.Manager.Sound.PlaySFX("SFX_Stage3_Item");

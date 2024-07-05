@@ -7,12 +7,6 @@ public class Stage8 : StageBase
     [SerializeField] Transform cleanFallObstacleParent;
     [SerializeField] Transform drugFallObstacleParent;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        StageIndex = 8;
-    }
-
     public override float GetMiddleCameraPositionX() => 362f;
 
     public override void UseDrug()

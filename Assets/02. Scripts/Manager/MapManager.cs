@@ -11,7 +11,6 @@ public class MapManager : Manager
     [SerializeField] GameObject blurParent;
 
     [SerializeField] RuntimeAnimatorController[] animators;
-    [SerializeField] int timeLimit = 30;
 
     private List<StageBase> stages;
     public StageBase currStage;
@@ -19,6 +18,7 @@ public class MapManager : Manager
     [SerializeField] private int stageIndex = 0;
     private int debuffIndex = 0;
 
+    private float timeRate = 1f;
     private int drugCount = 0;
     public bool IsClean { get; private set; }
 
@@ -160,7 +160,7 @@ public class MapManager : Manager
                 goto case 4;
 
             case 4:
-                timeLimit = 18;
+                timeRate = 0.8f;
                 if (debuffIndex + 1 == stageIndex) break;
                 goto case 3;
 
@@ -313,11 +313,12 @@ public class MapManager : Manager
     #region Time
     private IEnumerator CheckTime()
     {
-        float time = timeLimit;
-        while (time > 0f)
+        float time = currStage.StageTime * timeRate;
+        float currTime = time;
+        while (currTime > 0f)
         {
-            time -= Time.deltaTime;
-            Base.Manager.UI.SetTime(time / timeLimit);
+            currTime -= Time.deltaTime;
+            Base.Manager.UI.SetTime(time / time);
             yield return null;
         }
 
