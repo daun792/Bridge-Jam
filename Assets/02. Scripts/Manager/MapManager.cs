@@ -15,7 +15,7 @@ public class MapManager : Manager
     private List<StageBase> stages;
     public StageBase currStage;
 
-    private int stageIndex = 0;
+    [SerializeField] private int stageIndex = 0;
     private int debuffIndex = 0;
 
     private int drugCount = 0;
@@ -182,6 +182,11 @@ public class MapManager : Manager
     public void SetInvincible(bool _isInvincible)
     {
         player.Invincible = _isInvincible;
+    }
+
+    public void FlyToDestination(Vector3 _dest)
+    {
+        player.Fly(_dest);
     }
 
     private void InvertCamera() 

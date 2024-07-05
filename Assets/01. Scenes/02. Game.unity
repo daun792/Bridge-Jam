@@ -2114,7 +2114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7388284392237911676, guid: 107408798c8f2214690da036602b202c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.7
+      value: -8.45
       objectReference: {fileID: 0}
     - target: {fileID: 7388284392237911676, guid: 107408798c8f2214690da036602b202c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8408,6 +8408,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30dbd5c135b880e4eb1ad96515162f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &329229783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 329229784}
+  m_Layer: 0
+  m_Name: FlyDest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &329229784
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329229783}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.5, y: 7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1885485275}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330840040
 GameObject:
   m_ObjectHideFlags: 0
@@ -10939,6 +10970,7 @@ Transform:
   - {fileID: 1401583598}
   - {fileID: 1596468115}
   - {fileID: 1802540051}
+  - {fileID: 1544441136}
   m_Father: {fileID: 746368605}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16581,6 +16613,8 @@ MonoBehaviour:
     stageParent: {fileID: 450947812}
     startPosition: {fileID: 878988301}
     disappearTileParent: {fileID: 0}
+  cleanDest: {fileID: 329229784}
+  drugDest: {fileID: 1544441136}
 --- !u!1001 &750662487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24254,6 +24288,7 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 0dc230adba4e91946ae211b4c81607bd, type: 2}
   timeLimit: 30
   currStage: {fileID: 0}
+  stageIndex: 0
 --- !u!1 &1048268300
 GameObject:
   m_ObjectHideFlags: 0
@@ -33766,6 +33801,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1107817313852111918, guid: 0bef114127c85124db8394d4404e965b, type: 3}
   m_PrefabInstance: {fileID: 1542655692}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1544441135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1544441136}
+  m_Layer: 0
+  m_Name: FlyDest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1544441136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544441135}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.5, y: 7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 450947813}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1550016242
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40795,7 +40861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7388284392237911676, guid: 107408798c8f2214690da036602b202c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.699997
+      value: -8.449997
       objectReference: {fileID: 0}
     - target: {fileID: 7388284392237911676, guid: 107408798c8f2214690da036602b202c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -41587,6 +41653,7 @@ Transform:
   - {fileID: 1404325058}
   - {fileID: 1048845603}
   - {fileID: 2048187089}
+  - {fileID: 329229784}
   m_Father: {fileID: 746368605}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
