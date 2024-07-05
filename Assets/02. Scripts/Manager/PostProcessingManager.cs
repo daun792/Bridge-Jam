@@ -32,4 +32,15 @@ public class PostProcessingManager : Manager
         volume.profile.TryGet(out UnityEngine.Rendering.Universal.ChromaticAberration chromaticAberration);
         chromaticAberration.intensity.value = 0.4f;
     }
+
+    public void SetGlitch(float _value)
+    {
+        volume.profile.TryGet(out URPGlitch.Runtime.DigitalGlitch.DigitalGlitchVolume digitalGlitch);
+        digitalGlitch.intensity.value = _value;
+    }
+
+    public void SetAnalogGlitch()
+    {
+        volume.profile.TryGet(out URPGlitch.Runtime.AnalogGlitch.AnalogGlitchVolume analogGlitch);
+    }
 }
