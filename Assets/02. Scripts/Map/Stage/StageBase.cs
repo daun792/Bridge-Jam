@@ -58,6 +58,8 @@ public abstract class StageBase : MonoBehaviour
                 tile.color += fullAlpha;
             }
         }
+
+        ObstacleBase.InitObstacle?.Invoke();
     }
 
     public abstract void UseDrug();

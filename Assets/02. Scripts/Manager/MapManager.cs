@@ -80,11 +80,17 @@ public class MapManager : Manager
         StartCoroutine(timeCheckRoutine);
     }
 
-    public void PlayerDead()
+    public IEnumerator PlayerDead()
     {
         Base.Manager.Sound.PlaySFX("SFX_PlayerDead");
+        player.Die();
+
+        yield return new WaitForSeconds(0.5f);
 
         Base.Manager.UI.FadeInOut(ReloadStage);
+        Debug.Log("DD");
+
+        player.Respawn();
     }
 
     private void ReloadStage()
@@ -143,6 +149,7 @@ public class MapManager : Manager
                 goto case 7;
 
             case 7:
+                Base.Manager.PostProcessing.SetFlashBack();
                 if (debuffIndex + 1 == stageIndex) break;
                 goto case 6;
 
