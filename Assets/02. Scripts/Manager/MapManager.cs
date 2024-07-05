@@ -8,6 +8,7 @@ public class MapManager : Manager
 {
     [SerializeField] Transform cameraTrans;
     [SerializeField] Transform playerTrans;
+    [SerializeField] GameObject blurParent;
 
     [SerializeField] RuntimeAnimatorController[] animators;
     [SerializeField] int timeLimit = 30;
@@ -147,7 +148,7 @@ public class MapManager : Manager
 
             case 6:
             case 5:
-                //
+                blurParent.SetActive(true);
                 if (debuffIndex + 1 == stageIndex) break;
                 goto case 4;
 
