@@ -33,6 +33,8 @@ public class Stage7 : StageBase
         false => isClean? 0f : -20f
     };
 
+    public override float GetMiddleCameraPositionX() => 312f;
+
     public override void SetStage(bool _isClean)
     {
         base.SetStage(_isClean);

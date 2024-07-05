@@ -10,6 +10,10 @@ public class Stage9 : StageBase
         StageIndex = 9;
     }
 
+    public override float GetCameraPositionY() => 0f;
+
+    public override float GetMiddleCameraPositionX() => 412f;
+
     public override void UseDrug()
     {
         Base.Manager.Map.SetPlayerToSpace(true);

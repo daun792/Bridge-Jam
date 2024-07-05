@@ -10,6 +10,10 @@ public class Stage10 : StageBase
         StageIndex = 10;
     }
 
+    public override float GetCameraPositionY() => 0f;
+
+    public override float GetMiddleCameraPositionX() => 466f;
+
     public override void UseDrug()
     {
 

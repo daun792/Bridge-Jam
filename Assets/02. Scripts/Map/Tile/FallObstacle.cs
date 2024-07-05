@@ -12,8 +12,10 @@ public class FallObstacle : ObstacleBase
     private Sequence sequence;
     private float delay = 3f;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         startPosition = transform.position;
     }
 
