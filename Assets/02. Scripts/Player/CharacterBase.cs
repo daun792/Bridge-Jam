@@ -66,6 +66,7 @@ public class CharacterBase : MonoBehaviour
     private bool canMove = true;
     private Material mat;
     public float matSpeed = .01f;
+    public bool IsSpace = false;
 
     #region Unity Events
     protected virtual void OnEnable()

@@ -12,6 +12,6 @@ public class Stage9 : StageBase
 
     public override void UseDrug()
     {
-
+        Base.Manager.Map.SetPlayerToSpace(true);
     }
 }

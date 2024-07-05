@@ -109,6 +109,7 @@ public class MapManager : Manager
 
     private void SetDrugEffect()
     {
+        SetPlayerToSpace(false);
         if (IsClean)
         {
             Base.Manager.Sound.ResumeBGM();
@@ -253,6 +254,12 @@ public class MapManager : Manager
     public void StopTimeBacking()
     {
         StopCoroutine(backToPreviousPlace);
+    }
+
+    public void SetPlayerToSpace(bool _isSpace)
+    {
+        player.IsSpace = _isSpace;
+        ChangeJumpSpeed(0.5f);
     }
 
     private IEnumerator GetBackToPreviousPlace()
