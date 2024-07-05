@@ -24637,7 +24637,7 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 0dc230adba4e91946ae211b4c81607bd, type: 2}
   timeLimit: 30
   currStage: {fileID: 0}
-  stageIndex: 5
+  stageIndex: 0
 --- !u!1 &1048268300
 GameObject:
   m_ObjectHideFlags: 0

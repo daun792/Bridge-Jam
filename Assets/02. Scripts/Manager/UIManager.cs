@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using UnityEditor.ShaderGraph.Internal;
 
 public class UIManager : Manager
 {
