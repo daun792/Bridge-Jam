@@ -41,6 +41,8 @@ public class MapManager : Manager
 
     public void LoadStage()
     {
+        if (currStage != null)
+            Destroy(currStage.gameObject);
         stageIndex++;
         currStage = stages.Find(x => x.StageIndex == stageIndex);
         currStage.SetStage(IsClean);

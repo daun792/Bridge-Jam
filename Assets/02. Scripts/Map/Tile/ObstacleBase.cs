@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StaticObstacleTile : MonoBehaviour
+public class ObstacleBase : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -22,5 +22,11 @@ public class StaticObstacleTile : MonoBehaviour
                 }
             } 
         }
+        else
+        {
+            CheckCollisionTag();
+        }
     }
+
+    protected virtual void CheckCollisionTag() { }
 }
