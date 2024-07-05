@@ -32,6 +32,10 @@ public class CharacterPlayer : CharacterBase
     {
         base.BehaveInAir();
         Move(moveAxis);
+        if (jumpButtonDown && IsSpace)
+        {
+            Jump();
+        }
     }
 
     private void GetInput()
