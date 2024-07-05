@@ -16,7 +16,6 @@ public class Stage4 : StageBase
     public override void UseDrug()
     {
         Base.Manager.Map.ChangeJumpSpeed(0.5f);
-        Base.Manager.Map.ChangeJumpHeight(3.25f);
         if (isClean)
         {
             foreach (var tile in cleanDrowningTiles)
