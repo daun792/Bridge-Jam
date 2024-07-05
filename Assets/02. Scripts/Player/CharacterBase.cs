@@ -63,6 +63,8 @@ public class CharacterBase : MonoBehaviour
     private string animatorOnGroundName = "OnGround";
     private string animatorInAirName = "InAir";
     private string animatorFlyName = "Fly";
+    private string animatorDieName = "Die";
+    private string animatorRespawnName = "Respawn";
 
     private bool canMove = true;
     private Material mat;
@@ -150,6 +152,26 @@ public class CharacterBase : MonoBehaviour
                 canMove = true;
             });
         });
+    }
+
+    public void Die()
+    {
+        canMove = false;
+        gravity = Vector2.zero;
+        velocity = Vector2.zero;
+        characterRigidbody.velocity = Vector2.zero;
+        characterAnimator.SetFloat(animatorCharacterSpeedName, 0);
+        characterAnimator.SetTrigger(animatorDieName);
+    }
+
+    public void Respawn()
+    {
+        characterAnimator.SetTrigger(animatorRespawnName);
+    }
+
+    public void SetCanMove(bool _canMove)
+    {
+        canMove = _canMove;
     }
 
     protected virtual void EffectedByGravity()

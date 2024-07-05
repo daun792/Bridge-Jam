@@ -13,6 +13,7 @@ public class UIManager : Manager
     [SerializeField] Image[] itemImgs;
     [SerializeField] Sprite[] faceSprites;
     [SerializeField] Sprite[] itemSprites;
+    [SerializeField] CharacterBase player;
 
     protected override void Awake()
     {
@@ -45,6 +46,8 @@ public class UIManager : Manager
     #region Fade In / Out
     public void FadeIn(Action _endEvent = null)
     {
+        player.SetCanMove(false);
+
         if (blackBlur.color.a == 1f)
         {
             _endEvent?.Invoke();
@@ -74,11 +77,14 @@ public class UIManager : Manager
             {
                 _endEvent?.Invoke();
                 blackBlur.gameObject.SetActive(false);
+                player.SetCanMove(true);
             });
     }
 
     public void FadeInOut(Action _midEvent = null)
     {
+        player.SetCanMove(false);
+
         if (blackBlur.color.a == 1f)
         {
             _midEvent?.Invoke();
