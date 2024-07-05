@@ -11,5 +11,6 @@ public class Stage5 : StageBase
     {
         Base.Manager.Sound.VolumeDownBGM();
         Base.Manager.Map.FlyToDestination(isClean ? cleanDest.position : drugDest.position);
+        Base.Manager.PostProcessing.SetAnalogGlitch(true);
     }
 }

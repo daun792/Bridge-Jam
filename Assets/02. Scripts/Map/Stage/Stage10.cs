@@ -14,10 +14,11 @@ public class Stage10 : StageBase
     WaitForSeconds wait;
 
     private Vector3 startPosition = new(466, 0, -10);
-    private Vector3 cameraPosition = new(479.45f, -1.37f, -10);
+    private Vector3 cameraPosition = new(479.51f, -1.44f, -10);
+    private readonly Vector3 endPosition = new(472.8f, -1, -10);
 
     private float startSize = 8f;
-    private float cameraSize = 0.67f;
+    private float cameraSize = 0.6f;
 
     protected override void Awake()
     {
@@ -36,7 +37,11 @@ public class Stage10 : StageBase
         obstaclesParent.SetActive(false);
         colliderObj.SetActive(true);
         Base.Manager.Map.StopWindowLotation();
-        // 플레이어 못움직이게
+        Base.Manager.Map.StopTimeBacking();
+        Base.Manager.Map.StopTimer();
+
+        cam.ResetProjectionMatrix();
+
         StartCoroutine(PlayDrugProduction());
     }
 
@@ -46,31 +51,29 @@ public class Stage10 : StageBase
 
         yield return wait;
 
+        cam.orthographicSize = cameraSize;
         Base.Manager.PostProcessing.SetGlitch(0.3f);
         cameraTrans.position = cameraPosition;
-        cam.orthographicSize = cameraSize;
         Base.Manager.Sound.PlayBGM("BGM_Stage10");
 
         yield return wait;
 
+        cam.orthographicSize = startSize;
         Base.Manager.PostProcessing.SetGlitch(0.2f);
         cameraTrans.position = startPosition;
-        cam.orthographicSize = startSize;
 
         yield return wait;
 
+        cam.orthographicSize = cameraSize;
         Base.Manager.PostProcessing.SetGlitch(0.4f);
         cameraTrans.position = cameraPosition;
-        cam.orthographicSize = cameraSize;
 
         yield return wait;
 
         playerTrans.position = blinkTrans.position;
 
+        cam.orthographicSize = startSize/2;
         Base.Manager.PostProcessing.SetGlitch(0.1f);
-        cameraTrans.position = startPosition;
-        cam.orthographicSize = startSize;
-
-        //플레이어 움직일 수 있게
+        cameraTrans.position = endPosition;
     }
 }

@@ -28,6 +28,8 @@ public class MapManager : Manager
     private CharacterBase player;
 
     private Camera cam;
+    private Matrix4x4 originMatrix;
+
 
     private void Start()
     {
@@ -36,6 +38,7 @@ public class MapManager : Manager
         stages = GetComponentsInChildren<StageBase>().ToList();
         player = playerTrans.GetComponent<CharacterBase>();
         cam = cameraTrans.GetComponent<Camera>();
+        originMatrix = cam.projectionMatrix;
 
         Sequence sequence = DOTween.Sequence();
         sequence.OnStart(() =>
@@ -57,8 +60,10 @@ public class MapManager : Manager
 
     public void LoadStage()
     {
-        Base.Manager.Sound.StopBGM();
+        stageIndex++;
 
+        Base.Manager.Sound.StopBGM();
+        
         Base.Manager.UI.FadeInOut(SetCurrStage);
 
         SetDrugEffect();
@@ -68,7 +73,7 @@ public class MapManager : Manager
     {
         if (currStage != null)
             Destroy(currStage.gameObject);
-        stageIndex++;
+        
         currStage = stages.Find(x => x.StageIndex == stageIndex);
         currStage.SetStage(IsClean);
 
@@ -236,8 +241,11 @@ public class MapManager : Manager
     public void SetInvincible(bool _isInvincible)
     {
         player.Invincible = _isInvincible;
-        Base.Manager.PostProcessing.SetFlashBack();
-        player.SetFlashBack();
+        if (_isInvincible)
+        {
+            Base.Manager.PostProcessing.SetFlashBack();
+            player.SetFlashBack();
+        }
     }
 
     public void FlyToDestination(Vector3 _dest)
@@ -247,16 +255,11 @@ public class MapManager : Manager
 
     private void InvertCamera() 
     {
-        Matrix4x4 mat = cam.projectionMatrix;
+        Matrix4x4 mat = originMatrix;
         mat *= Matrix4x4.Scale(new Vector3(1, -1, 1));
 
         cam.projectionMatrix = mat;
     }
-
-
-
-
-
 
     public void ModifyPlayerSpeed(float _value)
     {
@@ -316,7 +319,7 @@ public class MapManager : Manager
 
     private IEnumerator WindowLotationLoop()
     {
-        Matrix4x4 mat = cam.projectionMatrix;
+        Matrix4x4 mat = originMatrix;
         var invertXMat = mat * Matrix4x4.Scale(new Vector3(-1, -1, 1));
         var invertYMat = mat * Matrix4x4.Scale(new Vector3(1, -1, 1));
 
@@ -330,6 +333,12 @@ public class MapManager : Manager
 
             cam.projectionMatrix = invertYMat;
         }
+    }
+
+    public void StopTimer()
+    {
+        if (timeCheckRoutine != null) 
+            StopCoroutine(timeCheckRoutine);
     }
 
     #region Time

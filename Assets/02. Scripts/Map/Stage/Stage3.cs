@@ -7,6 +7,9 @@ public class Stage3 : StageBase
     [SerializeField] GameObject cleanRainbow;
     [SerializeField] GameObject drugRainbow;
 
+    [SerializeField] GameObject cleanTiles;
+    [SerializeField] GameObject drugTiles;
+
     public override void UseDrug()
     {
         Base.Manager.Sound.VolumeDownBGM();
@@ -15,10 +18,12 @@ public class Stage3 : StageBase
         if (isClean)
         {
             cleanRainbow.SetActive(true);
+            cleanTiles.SetActive(false);
         }
         else
         {
             drugRainbow.SetActive(true);
+            drugTiles.SetActive(false);
         }
     }
 }

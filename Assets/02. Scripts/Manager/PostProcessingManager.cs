@@ -39,8 +39,10 @@ public class PostProcessingManager : Manager
         digitalGlitch.intensity.value = _value;
     }
 
-    public void SetAnalogGlitch()
+    public void SetAnalogGlitch(bool _isActive)
     {
         volume.profile.TryGet(out URPGlitch.Runtime.AnalogGlitch.AnalogGlitchVolume analogGlitch);
+        analogGlitch.scanLineJitter.value = _isActive ? 0.2f : 0f;
+        analogGlitch.verticalJump.value = _isActive ? 0.05f : 0f;
     }
 }

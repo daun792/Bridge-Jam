@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Stage6 : StageBase
 {
+    public override void SetStage(bool _isClean)
+    {
+        base.SetStage(_isClean);
+
+        Base.Manager.PostProcessing.SetAnalogGlitch(false);
+    }
+
     public override void UseDrug()
     {
         Base.Manager.Sound.PitchBGM(1.1f);

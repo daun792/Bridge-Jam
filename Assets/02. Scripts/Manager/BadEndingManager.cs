@@ -26,6 +26,7 @@ public class BadEndingManager : MonoBehaviour
 
         Sequence sequence = DOTween.Sequence();
         sequence.Append(frontPanel.DOFade(1f, 1f))
+            .InsertCallback(0f, (() => Base.Manager.Sound.SetBGMVolumeTweening(1f)))
             .OnComplete(() => Base.LoadScene(SceneName.Title));
     }
 
