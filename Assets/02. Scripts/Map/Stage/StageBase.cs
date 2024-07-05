@@ -45,7 +45,7 @@ public abstract class StageBase : MonoBehaviour
         false => -20f
     };
 
-    public void ResetStage()
+    public virtual void ResetStage()
     {
         if (currStage.disappearTileParent != null)
         {
