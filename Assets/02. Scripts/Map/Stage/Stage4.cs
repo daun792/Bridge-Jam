@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Stage4 : StageBase
 {
+    [SerializeField] DrowningTile[] cleanDrowningTiles;
+    [SerializeField] DrowningTile[] drugDrowningTiles;
+
     protected override void Awake()
     {
         base.Awake();
@@ -13,5 +16,33 @@ public class Stage4 : StageBase
     public override void UseDrug()
     {
         Base.Manager.Map.ChangeJumpSpeed(0.5f);
+        Base.Manager.Map.ChangeJumpHeight(3.25f);
+        if (isClean)
+        {
+            foreach (var tile in cleanDrowningTiles)
+            {
+                tile.IsDrwoning = true;
+            }
+        }
+        else
+        {
+            foreach (var tile in drugDrowningTiles)
+            {
+                tile.IsDrwoning = true;
+            }
+        }
+    }
+
+    public override void ResetStage()
+    {
+        base.ResetStage();
+        foreach (var tile in cleanDrowningTiles)
+        {
+            tile.IsDrwoning = false;
+        }
+        foreach (var tile in drugDrowningTiles)
+        {
+            tile.IsDrwoning = false;
+        } 
     }
 }

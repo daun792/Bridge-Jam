@@ -30,7 +30,16 @@ public class DisappearTile : MonoBehaviour
 
             Sequence sequence = DOTween.Sequence();
             sequence.Append(sprite.DOFade(0f, delay).SetEase(Ease.Linear))
-                .OnComplete(() => gameObject.SetActive(false));
+                .OnComplete(TileDisappear);
         }
+    }
+
+    public void TileDisappear()
+    {
+        foreach (Transform child in transform)
+        {
+            child.SetParent(null);
+        }
+        gameObject.SetActive(false);
     }
 }
