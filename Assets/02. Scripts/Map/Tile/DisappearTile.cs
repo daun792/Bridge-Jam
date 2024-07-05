@@ -26,6 +26,8 @@ public class DisappearTile : MonoBehaviour
         {
             isPlayerOnTile = true;
 
+            Base.Manager.Sound.PlaySFX("SFX_Tile_Disappear");
+
             Sequence sequence = DOTween.Sequence();
             sequence.Append(sprite.DOFade(0f, delay).SetEase(Ease.Linear))
                 .OnComplete(() => gameObject.SetActive(false));

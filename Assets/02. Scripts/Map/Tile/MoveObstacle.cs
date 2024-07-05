@@ -28,6 +28,8 @@ public class MoveObstacle : ObstacleBase
 
         while (true)
         {
+            Base.Manager.Sound.PlaySFX("SFX_Tile_MoveObstacle");
+
             transform.DOLocalMoveY(-1, appearTime).SetEase(Ease.Linear);
             yield return appearWait;
 
