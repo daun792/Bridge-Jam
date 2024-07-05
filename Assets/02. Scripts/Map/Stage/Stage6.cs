@@ -14,6 +14,6 @@ public class Stage6 : StageBase
     {
         Base.Manager.Sound.PlaySFX("SFX_Stage6_Item");
         Base.Manager.Map.SetInvincible(true);
-        Base.Manager.Map.ChangeSpeed(4f);
+        Base.Manager.Map.ChangeSpeed(3f);
     }
 }
