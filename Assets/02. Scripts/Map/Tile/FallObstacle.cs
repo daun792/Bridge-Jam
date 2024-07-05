@@ -52,6 +52,7 @@ public class FallObstacle : ObstacleBase
 
     protected override void CheckOtherCollision(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Fall")) return;
         sequence?.Kill();
         gameObject.SetActive(false);
         StartFall();
