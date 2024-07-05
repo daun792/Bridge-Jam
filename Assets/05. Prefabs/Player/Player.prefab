@@ -147,6 +147,9 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  ceilingMask:
+    serializedVersion: 2
+    m_Bits: 247
   Invincible: 0
   matSpeed: 0.2
   IsSpace: 0
