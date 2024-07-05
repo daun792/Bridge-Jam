@@ -40,7 +40,7 @@ Material:
     m_Floats:
     - _SineAmp: 1
     - _SineLength: 0.1
-    - _Speed: 0.5
+    - _Speed: 1
     - _YValue: 3.32
     m_Colors: []
   m_BuildTextureStacks: []

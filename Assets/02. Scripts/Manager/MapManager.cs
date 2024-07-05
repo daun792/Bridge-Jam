@@ -285,7 +285,6 @@ public class MapManager : Manager
 
     private IEnumerator GetBackToPreviousPlace()
     {
-        Debug.Log("dd");
         float interval = Random.Range(2f, 5f);
 
         while (true)
@@ -311,7 +310,8 @@ public class MapManager : Manager
 
     public void StopWindowLotation()
     {
-        StopCoroutine(windowInvert);
+        if (windowInvert != null)
+            StopCoroutine(windowInvert);
     }
 
     private IEnumerator WindowLotationLoop()
