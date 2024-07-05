@@ -486,6 +486,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b2afa649d843258458ddce14df33320d, type: 3}
   - name: BGM_Stage10
     clip: {fileID: 8300000, guid: f4d2def0868b1214fac7db5b142488ef, type: 3}
+  - name: BGM_Title
+    clip: {fileID: 8300000, guid: 5c96e8d079ad21e4b8df2f8fe653c841, type: 3}
   SFX:
   - name: SFX_PlayerDead
     clip: {fileID: 8300000, guid: e947f6f2adf80654690e2a83c8f01484, type: 3}

@@ -122,7 +122,7 @@ public class SoundManager : Manager
     #region Play & Stop Sound
 
     #region BGM
-    public void PlayBGM(string _name)
+    public void PlayBGM(string _name, float _duration = 1f)
     {
         if (!dic_BGM.TryGetValue(_name, out var clip))
         {
@@ -131,6 +131,7 @@ public class SoundManager : Manager
         }
 
         bgmPlayer.pitch = 1f;
+        bgmPlayer.volume = 0f;
 
         if (bgmPlayer.isPlaying)
         {
@@ -146,7 +147,7 @@ public class SoundManager : Manager
             bgmPlayer.Play();
         }
 
-        bgmPlayer.DOFade(1f, 1f).SetEase(Ease.Linear);
+        bgmPlayer.DOFade(1f, _duration).SetEase(Ease.Linear);
     }
 
     public void ResumeBGM()
@@ -159,6 +160,12 @@ public class SoundManager : Manager
     {
         bgmPlayer.pitch = 1f;
         bgmPlayer.DOFade(0f, 0f);
+    }
+
+    public void RealStopBGM()
+    {
+        bgmPlayer.DOFade(0f, 0f);
+        bgmPlayer.Stop();
     }
 
     public void PitchBGM()
@@ -224,11 +231,11 @@ public class SoundManager : Manager
     {
         float volume = bgmPlayer.volume;
 
-        var bgmTween = DOTween.To(() => bgmVolume, x => bgmVolume = x, 0f, _duration)
+        var bgmTween = DOTween.To(() => volume, x => volume = x, 0f, _duration)
             .SetEase(Ease.Linear)
             .OnUpdate(() =>
             {
-                bgmPlayer.volume = bgmVolume;
+                bgmPlayer.volume = volume;
             });
 
         return volume;
