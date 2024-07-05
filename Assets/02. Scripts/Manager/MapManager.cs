@@ -19,7 +19,7 @@ public class MapManager : Manager
     private int debuffIndex = 0;
 
     private int drugCount = 0;
-    public bool IsClean => drugCount <= 0;
+    public bool IsClean { get; private set; }
 
     private IEnumerator backToPreviousPlace;
     private IEnumerator timeCheckRoutine;
@@ -29,6 +29,8 @@ public class MapManager : Manager
 
     private void Start()
     {
+        IsClean = true;
+
         stages = GetComponentsInChildren<StageBase>().ToList();
         player = playerTrans.GetComponent<CharacterBase>();
         cam = cameraTrans.GetComponent<Camera>();
@@ -47,11 +49,14 @@ public class MapManager : Manager
             {
                 Base.Manager.UI.InitPPCanvas();
                 InitStage();
+                Base.Manager.Sound.PlayBGM("BGM_Clean");
             });
     }
 
     public void LoadStage()
     {
+        Base.Manager.Sound.StopBGM();
+
         if (currStage != null)
             Destroy(currStage.gameObject);
         stageIndex++;
@@ -92,7 +97,7 @@ public class MapManager : Manager
     private void MoveCamera()
     {
         var xPos = 50 * stageIndex - 50;
-        var yPos = IsClean ? 0f : -20f;
+        var yPos = currStage.GetCameraPositionY();
         cameraTrans.position = new Vector3(xPos, yPos, -10f);
     }
 
@@ -103,7 +108,20 @@ public class MapManager : Manager
 
     private void SetDrugEffect()
     {
-        if (IsClean) return;
+        if (IsClean)
+        {
+            Base.Manager.Sound.ResumeBGM();
+            return;
+        }
+
+        if (Base.Manager.Sound.GetPlayingBGM() == "CleanBGM")
+        {
+            Base.Manager.Sound.PlayBGM("BGM_Drug");
+        }
+        else if (Base.Manager.Sound.GetPlayingBGM() == "DrugBGM") 
+        {
+            Base.Manager.Sound.ResumeBGM();
+        }
 
         switch (stageIndex)
         {
@@ -166,7 +184,10 @@ public class MapManager : Manager
             ChangeState(FaceType.Delight);
         }
 
+        Base.Manager.Sound.PitchBGM();
+
         drugCount++;
+        IsClean = false;
         currStage.UseDrug();
     }
 

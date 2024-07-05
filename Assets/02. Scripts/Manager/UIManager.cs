@@ -46,8 +46,6 @@ public class UIManager : Manager
     #region Fade In / Out
     public void FadeIn(Action _endEvent = null)
     {
-        Base.Manager.Sound.StopBGM();
-
         if (blackBlur.color.a == 1f)
         {
             _endEvent?.Invoke();
@@ -82,8 +80,6 @@ public class UIManager : Manager
 
     public void FadeInOut(Action _midEvent = null)
     {
-        Base.Manager.Sound.StopBGM();
-
         if (blackBlur.color.a == 1f)
         {
             _midEvent?.Invoke();

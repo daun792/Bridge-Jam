@@ -33,13 +33,19 @@ public abstract class StageBase : MonoBehaviour
         currStage.stageParent.SetActive(true);
     }
 
-    public Vector3 GetStartPosition() => isClean switch
+    public virtual Vector3 GetStartPosition() => isClean switch
     {
         true => cleanStage.startPosition.position,
         false => drugStage.startPosition.position
     };
 
-    public virtual void ResetStage()
+    public virtual float GetCameraPositionY() => isClean switch
+    {
+        true => 0f,
+        false => -20f
+    };
+
+    public void ResetStage()
     {
         if (currStage.disappearTileParent != null)
         {
