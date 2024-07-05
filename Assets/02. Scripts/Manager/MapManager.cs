@@ -199,6 +199,12 @@ public class MapManager : Manager
         currStage.UseDrug();
     }
 
+    public void MoveCameraToMiddle()
+    {
+        var xPos = currStage.GetMiddleCameraPositionX();
+        cameraTrans.DOMoveX(xPos, 1f).SetEase(Ease.Linear);
+    }
+
     public void ChangeState(FaceType _state)
     {
         player.SetAnimator(animators[(int)_state]);

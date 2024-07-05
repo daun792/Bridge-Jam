@@ -45,6 +45,8 @@ public abstract class StageBase : MonoBehaviour
         false => -20f
     };
 
+    public virtual float GetMiddleCameraPositionX() => 0f;
+
     public virtual void ResetStage()
     {
         if (currStage.disappearTileParent != null)

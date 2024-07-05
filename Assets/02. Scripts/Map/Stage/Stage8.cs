@@ -13,6 +13,8 @@ public class Stage8 : StageBase
         StageIndex = 8;
     }
 
+    public override float GetMiddleCameraPositionX() => 362f;
+
     public override void UseDrug()
     {
         Base.Manager.Map.StopTimeBacking();
