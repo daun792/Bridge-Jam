@@ -319,7 +319,6 @@ public class CharacterBase : MonoBehaviour
         Debug.DrawRay(characterCollider.bounds.center + Vector3.up * characterCollider.bounds.size.y * 0.55f, Vector2.up * characterCollider.bounds.size.y * 0.55f, Color.red, 1f);
         if (hit.collider != null)
         {
-            Debug.Log(hit.collider.gameObject);
             gravity.y = 0;
         }
     }
