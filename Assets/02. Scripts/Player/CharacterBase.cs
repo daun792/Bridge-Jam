@@ -43,7 +43,6 @@ public class CharacterBase : MonoBehaviour
         get => currentFloor;
         set
         {
-            transform.SetParent(value);
             currentFloor = value;
         }
     }
@@ -157,10 +156,7 @@ public class CharacterBase : MonoBehaviour
     public void Die()
     {
         canMove = false;
-        gravity = Vector2.zero;
-        velocity = Vector2.zero;
-        characterRigidbody.velocity = Vector2.zero;
-        characterAnimator.SetFloat(animatorCharacterSpeedName, 0);
+        SetVelocityZero();
         characterAnimator.SetTrigger(animatorDieName);
     }
 
@@ -172,6 +168,14 @@ public class CharacterBase : MonoBehaviour
     public void SetCanMove(bool _canMove)
     {
         canMove = _canMove;
+    }
+
+    public void SetVelocityZero()
+    {
+        gravity = Vector2.zero;
+        velocity = Vector2.zero;
+        characterRigidbody.velocity = Vector2.zero;
+        characterAnimator.SetFloat(animatorCharacterSpeedName, 0);
     }
 
     protected virtual void EffectedByGravity()

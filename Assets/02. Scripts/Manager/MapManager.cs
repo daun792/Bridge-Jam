@@ -13,7 +13,7 @@ public class MapManager : Manager
     [SerializeField] RuntimeAnimatorController[] animators;
 
     private List<StageBase> stages;
-    public StageBase currStage;
+    private StageBase currStage;
 
     [SerializeField] private int stageIndex = 0;
     private int debuffIndex = 0;
@@ -71,6 +71,7 @@ public class MapManager : Manager
 
     private void InitStage()
     {
+        player.SetVelocityZero();
         MoveCamera();
         MovePlayer();
 
@@ -88,7 +89,6 @@ public class MapManager : Manager
         yield return new WaitForSeconds(0.5f);
 
         Base.Manager.UI.FadeInOut(ReloadStage);
-        Debug.Log("DD");
 
         player.Respawn();
     }
@@ -185,11 +185,15 @@ public class MapManager : Manager
             Base.Manager.UI.FaceChange(FaceType.Hallucinated);
             ChangeState(FaceType.Hallucinated);
         }
-        else
+        else if(drugCount >= 5)
         {
             Base.Manager.Sound.PlaySFX("SFX_GetItem");
             Base.Manager.UI.FaceChange(FaceType.Delight);
             ChangeState(FaceType.Delight);
+        }
+        else
+        {
+            Base.Manager.Sound.PlaySFX("SFX_GetItem");
         }
 
         Base.Manager.Sound.PitchBGM();
@@ -222,11 +226,6 @@ public class MapManager : Manager
         player.GravityScale = _value * _value;
     }
 
-    public void ChangeJumpHeight(float _value)
-    {
-        player.JumpVelocity = _value;
-    }
-
     public void SetInvincible(bool _isInvincible)
     {
         player.Invincible = _isInvincible;
@@ -255,7 +254,6 @@ public class MapManager : Manager
     public void ModifyPlayerSpeed(float _value)
     {
         ChangeSpeed(_value);
-        ChangeJumpSpeed(_value);
     }
 
     private void SetTimeBacking()
@@ -272,7 +270,7 @@ public class MapManager : Manager
     public void SetPlayerToSpace(bool _isSpace)
     {
         player.IsSpace = _isSpace;
-        ChangeJumpSpeed(0.5f);
+        ChangeJumpSpeed(_isSpace ? 0.5f : 1f);
     }
 
     private IEnumerator GetBackToPreviousPlace()
@@ -318,7 +316,7 @@ public class MapManager : Manager
         while (currTime > 0f)
         {
             currTime -= Time.deltaTime;
-            Base.Manager.UI.SetTime(time / time);
+            Base.Manager.UI.SetTime(currTime / time);
             yield return null;
         }
 

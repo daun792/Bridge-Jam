@@ -44,7 +44,7 @@ public class FallObstacle : ObstacleBase
            .AppendCallback(() =>
            {
                Base.Manager.Sound.PlaySFX("SFX_Tile_FallObstacle");
-
+               gameObject.SetActive(true);
                transform.position = startPosition;
            })
            .Append(transform.DOLocalMoveY(-20, fallingDuration)).SetEase(Ease.Linear);
@@ -53,6 +53,7 @@ public class FallObstacle : ObstacleBase
     protected override void CheckOtherCollision(Collision2D collision)
     {
         sequence?.Kill();
+        gameObject.SetActive(false);
         StartFall();
     }
 

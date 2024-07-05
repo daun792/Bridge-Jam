@@ -20,4 +20,20 @@ public class LinearMovingLift : MonoBehaviour
             OnComplete(() => MoveToNextPoint());
         currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
     }
+
+    protected void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.transform.SetParent(transform);
+        }
+    }
+
+    protected void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.transform.SetParent(Base.Manager.Map.transform);
+        }
+    }
 }

@@ -22,7 +22,7 @@ public class DrowningTile : MonoBehaviour
             if (collision.transform.position.y - half > transform.position.y)
             {
                 transform.DOKill();
-                transform.DOMoveY(startPos.y - 0.5f, 1f).SetEase(Ease.OutQuad);
+                transform.DOMoveY(startPos.y - 1f, 1f).SetEase(Ease.OutQuad);
                 isDrowned = true;
             }
         }
