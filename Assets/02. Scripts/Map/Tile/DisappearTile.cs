@@ -24,13 +24,17 @@ public class DisappearTile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && !isPlayerOnTile)
         {
-            isPlayerOnTile = true;
+            float half = collision.gameObject.GetComponent<Collider2D>().bounds.size.y * 0.4f;
+            if (collision.transform.position.y - half > transform.position.y)
+            {
+                isPlayerOnTile = true;
 
-            Base.Manager.Sound.PlaySFX("SFX_Tile_Disappear");
+                Base.Manager.Sound.PlaySFX("SFX_Tile_Disappear");
 
-            Sequence sequence = DOTween.Sequence();
-            sequence.Append(sprite.DOFade(0f, delay).SetEase(Ease.Linear))
-                .OnComplete(TileDisappear);
+                Sequence sequence = DOTween.Sequence();
+                sequence.Append(sprite.DOFade(0f, delay).SetEase(Ease.Linear))
+                    .OnComplete(TileDisappear);
+            }
         }
     }
 
