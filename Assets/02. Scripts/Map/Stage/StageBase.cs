@@ -4,15 +4,15 @@ using UnityEngine;
 public abstract class StageBase : MonoBehaviour
 {
     [Serializable]
-    struct StageComposition
+    protected struct StageComposition
     {
         public GameObject stageParent;
         public Transform startPosition;
         public Transform disappearTileParent;
     }
 
-    [SerializeField] StageComposition cleanStage;
-    [SerializeField] StageComposition drugStage;
+    [SerializeField] protected StageComposition cleanStage;
+    [SerializeField] protected StageComposition drugStage;
 
     protected bool isClean = true;
     private StageComposition currStage;
@@ -33,13 +33,19 @@ public abstract class StageBase : MonoBehaviour
         currStage.stageParent.SetActive(true);
     }
 
-    public Vector3 GetStartPosition() => isClean switch
+    public virtual Vector3 GetStartPosition() => isClean switch
     {
         true => cleanStage.startPosition.position,
         false => drugStage.startPosition.position
     };
 
-    public virtual void ResetStage()
+    public virtual float GetCameraPositionY() => isClean switch
+    {
+        true => 0f,
+        false => -20f
+    };
+
+    public void ResetStage()
     {
         if (currStage.disappearTileParent != null)
         {

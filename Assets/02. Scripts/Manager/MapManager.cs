@@ -8,6 +8,7 @@ public class MapManager : Manager
 {
     [SerializeField] Transform cameraTrans;
     [SerializeField] Transform playerTrans;
+    [SerializeField] GameObject blurParent;
 
     [SerializeField] RuntimeAnimatorController[] animators;
     [SerializeField] int timeLimit = 30;
@@ -19,7 +20,7 @@ public class MapManager : Manager
     private int debuffIndex = 0;
 
     private int drugCount = 0;
-    public bool IsClean => drugCount <= 0;
+    public bool IsClean { get; private set; }
 
     private IEnumerator backToPreviousPlace;
     private IEnumerator timeCheckRoutine;
@@ -29,18 +30,34 @@ public class MapManager : Manager
 
     private void Start()
     {
+        IsClean = true;
+
         stages = GetComponentsInChildren<StageBase>().ToList();
         player = playerTrans.GetComponent<CharacterBase>();
         cam = cameraTrans.GetComponent<Camera>();
 
-        LoadStage();
+        Sequence sequence = DOTween.Sequence();
+        sequence.OnStart(() =>
+            {
+                stageIndex++;
+                currStage = stages.Find(x => x.StageIndex == stageIndex);
+                currStage.SetStage(IsClean);
 
-        cameraTrans.position = new Vector3(0f, 10f, -10f);
-        cameraTrans.DOMoveY(0f, 1f).SetEase(Ease.OutCubic);
+                cameraTrans.position = new Vector3(0f, 20f, -10f);
+            })
+            .Append(cameraTrans.DOMoveY(0f, 1f).SetEase(Ease.Linear))
+            .OnComplete(() =>
+            {
+                Base.Manager.UI.InitPPCanvas();
+                InitStage();
+                Base.Manager.Sound.PlayBGM("BGM_Clean");
+            });
     }
 
     public void LoadStage()
     {
+        Base.Manager.Sound.StopBGM();
+
         if (currStage != null)
             Destroy(currStage.gameObject);
         stageIndex++;
@@ -81,7 +98,7 @@ public class MapManager : Manager
     private void MoveCamera()
     {
         var xPos = 50 * stageIndex - 50;
-        var yPos = IsClean ? 0f : -20f;
+        var yPos = currStage.GetCameraPositionY();
         cameraTrans.position = new Vector3(xPos, yPos, -10f);
     }
 
@@ -92,7 +109,20 @@ public class MapManager : Manager
 
     private void SetDrugEffect()
     {
-        if (IsClean) return;
+        if (IsClean)
+        {
+            Base.Manager.Sound.ResumeBGM();
+            return;
+        }
+
+        if (Base.Manager.Sound.GetPlayingBGM() == "CleanBGM")
+        {
+            Base.Manager.Sound.PlayBGM("BGM_Drug");
+        }
+        else if (Base.Manager.Sound.GetPlayingBGM() == "DrugBGM") 
+        {
+            Base.Manager.Sound.ResumeBGM();
+        }
 
         switch (stageIndex)
         {
@@ -118,7 +148,7 @@ public class MapManager : Manager
 
             case 6:
             case 5:
-                //
+                blurParent.SetActive(true);
                 if (debuffIndex + 1 == stageIndex) break;
                 goto case 4;
 
@@ -146,14 +176,19 @@ public class MapManager : Manager
         {
             Base.Manager.Sound.PlaySFX("SFX_GetItem_Sick");
             Base.Manager.UI.FaceChange(FaceType.Hallucinated);
+            ChangeState(FaceType.Hallucinated);
         }
         else
         {
             Base.Manager.Sound.PlaySFX("SFX_GetItem");
             Base.Manager.UI.FaceChange(FaceType.Delight);
+            ChangeState(FaceType.Delight);
         }
 
+        Base.Manager.Sound.PitchBGM();
+
         drugCount++;
+        IsClean = false;
         currStage.UseDrug();
     }
 

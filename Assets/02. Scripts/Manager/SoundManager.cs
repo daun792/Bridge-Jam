@@ -128,23 +128,45 @@ public class SoundManager : Manager
             return;
         }
 
-        bgmPlayer.clip = clip;
+        bgmPlayer.pitch = 1f;
 
-        bgmPlayer.Play();
-        bgmPlayer.DOFade(1f, 0.5f).SetEase(Ease.Linear);
+        if (bgmPlayer.isPlaying)
+        {
+            var playingTime = bgmPlayer.time;
+            bgmPlayer.clip = clip;
+            bgmPlayer.Play();
+            bgmPlayer.time = playingTime;
+        }
+        else
+        {
+            bgmPlayer.clip = clip;
+
+            bgmPlayer.Play();
+        }
+
+        bgmPlayer.DOFade(1f, 1f).SetEase(Ease.Linear);
     }
 
     public void ResumeBGM()
     {
-        if (bgmPlayer.isPlaying) return;
-
-        bgmPlayer.Play();
-        bgmPlayer.DOFade(1f, 0.5f).SetEase(Ease.Linear);
+        bgmPlayer.pitch = 1f;
+        bgmPlayer.DOFade(1f, 1f).SetEase(Ease.Linear);
     }
 
     public void StopBGM()
     {
-        bgmPlayer.DOFade(0f, 0.5f).OnComplete(() => bgmPlayer.Stop());
+        bgmPlayer.pitch = 1f;
+        bgmPlayer.DOFade(0f, 0f);
+    }
+
+    public void PitchBGM()
+    {
+        bgmPlayer.pitch = 0.9f;
+    }
+
+    public string GetPlayingBGM()
+    {
+        return bgmPlayer.clip.name;
     }
     #endregion
 
