@@ -14,7 +14,7 @@ public class ObstacleBase : MonoBehaviour
             {
                 if (!characterBase.Invincible)
                 {
-                    Base.Manager.UI.FadeInOut(Base.Manager.Map.ReloadStage);
+                    Base.Manager.Map.PlayerDead();
                 }
                 else
                 {

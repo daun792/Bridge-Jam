@@ -15,6 +15,8 @@ public class Stage3 : StageBase
 
     public override void UseDrug()
     {
+        Base.Manager.Sound.PlaySFX("SFX_Stage3_Item");
+
         if (isClean)
         {
             cleanRainbow.SetActive(true);

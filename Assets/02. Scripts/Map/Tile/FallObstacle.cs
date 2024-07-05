@@ -10,6 +10,7 @@ public class FallObstacle : ObstacleBase
 
     private Vector3 startPosition;
     private Sequence sequence;
+    private float delay = 3f;
 
     private void Start()
     {
@@ -28,7 +29,6 @@ public class FallObstacle : ObstacleBase
 
     private IEnumerator StartDelay()
     {
-        Debug.Log("DDDDD");
         yield return new WaitForSeconds(startDelay);
         StartFall();
     }
@@ -38,8 +38,11 @@ public class FallObstacle : ObstacleBase
         sequence = DOTween.Sequence();
 
         sequence.SetAutoKill(false)
+            .AppendInterval(delay)
            .AppendCallback(() =>
            {
+               Base.Manager.Sound.PlaySFX("SFX_Tile_FallObstacle");
+
                transform.position = startPosition;
            })
            .Append(transform.DOLocalMoveY(-20, fallingDuration)).SetEase(Ease.Linear);
@@ -49,5 +52,10 @@ public class FallObstacle : ObstacleBase
     {
         sequence?.Kill();
         StartFall();
+    }
+
+    public void SetItemEffect()
+    {
+        delay = 6f;
     }
 }
