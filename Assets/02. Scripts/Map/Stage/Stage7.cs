@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Stage7 : StageBase
 {
-    [SerializeField] Transform itemStartPosition;
+    [SerializeField] StageComposition drugDrugStage;
+
     [SerializeField] Transform cameraTrans;
     [SerializeField] Transform playerTrans;
+
     [SerializeField] GameObject obstacle;
     [SerializeField] GameObject cleanCollider;
-    [SerializeField] GameObject drugCollider;
 
     private bool isUseDrug = false;
 
@@ -18,6 +19,7 @@ public class Stage7 : StageBase
     {
         base.Awake();
         StageIndex = 7;
+        drugDrugStage.stageParent.SetActive(false);
     }
 
     public override void SetStage(bool _isClean)
@@ -52,7 +54,8 @@ public class Stage7 : StageBase
         {
             isUseDrug = true;
 
-            drugCollider.SetActive(true);
+            drugStage.stageParent.SetActive(false);
+            drugDrugStage.stageParent.SetActive(true);
 
             MoveCamera();
             MovePlayer();
@@ -66,6 +69,6 @@ public class Stage7 : StageBase
 
     private void MovePlayer()
     {
-        playerTrans.position = itemStartPosition.position;
+        playerTrans.position = drugDrugStage.startPosition.position;
     }
 }

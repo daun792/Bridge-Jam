@@ -33,10 +33,21 @@ public class MapManager : Manager
         player = playerTrans.GetComponent<CharacterBase>();
         cam = cameraTrans.GetComponent<Camera>();
 
-        LoadStage();
+        Sequence sequence = DOTween.Sequence();
+        sequence.OnStart(() =>
+            {
+                stageIndex++;
+                currStage = stages.Find(x => x.StageIndex == stageIndex);
+                currStage.SetStage(IsClean);
 
-        cameraTrans.position = new Vector3(0f, 10f, -10f);
-        cameraTrans.DOMoveY(0f, 1f).SetEase(Ease.OutCubic);
+                cameraTrans.position = new Vector3(0f, 20f, -10f);
+            })
+            .Append(cameraTrans.DOMoveY(0f, 1f).SetEase(Ease.Linear))
+            .OnComplete(() =>
+            {
+                Base.Manager.UI.InitPPCanvas();
+                InitStage();
+            });
     }
 
     public void LoadStage()
@@ -146,11 +157,13 @@ public class MapManager : Manager
         {
             Base.Manager.Sound.PlaySFX("SFX_GetItem_Sick");
             Base.Manager.UI.FaceChange(FaceType.Hallucinated);
+            ChangeState(FaceType.Hallucinated);
         }
         else
         {
             Base.Manager.Sound.PlaySFX("SFX_GetItem");
             Base.Manager.UI.FaceChange(FaceType.Delight);
+            ChangeState(FaceType.Delight);
         }
 
         drugCount++;

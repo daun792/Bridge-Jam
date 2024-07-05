@@ -7,6 +7,7 @@ using UnityEditor.ShaderGraph.Internal;
 
 public class UIManager : Manager
 {
+    [SerializeField] CanvasGroup ppcanvasGroup;
     [SerializeField] Image blackBlur;
     [SerializeField] Image faceImg;
     [SerializeField] Slider tiemSlider;
@@ -18,7 +19,13 @@ public class UIManager : Manager
     {
         base.Awake();
 
+        ppcanvasGroup.alpha = 0f;
         //TODO: Additional Initialize
+    }
+
+    public void InitPPCanvas()
+    {
+        ppcanvasGroup.DOFade(1f, 0.5f).SetEase(Ease.Linear);
     }
 
     private void Update() 
@@ -103,7 +110,6 @@ public class UIManager : Manager
     public void FaceChange(FaceType _type)
     {
         faceImg.sprite = faceSprites[(int)_type];
-        Base.Manager.Map.ChangeState(_type);
     }
     #endregion
 

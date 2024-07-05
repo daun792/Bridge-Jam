@@ -4,15 +4,15 @@ using UnityEngine;
 public abstract class StageBase : MonoBehaviour
 {
     [Serializable]
-    struct StageComposition
+    protected struct StageComposition
     {
         public GameObject stageParent;
         public Transform startPosition;
         public Transform disappearTileParent;
     }
 
-    [SerializeField] StageComposition cleanStage;
-    [SerializeField] StageComposition drugStage;
+    [SerializeField] protected StageComposition cleanStage;
+    [SerializeField] protected StageComposition drugStage;
 
     protected bool isClean = true;
     private StageComposition currStage;

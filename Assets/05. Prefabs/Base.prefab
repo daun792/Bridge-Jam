@@ -371,7 +371,7 @@ MonoBehaviour:
   - name: SFX_Tile_Disappear
     clip: {fileID: 8300000, guid: 0c20b03ea8f803940ab39dbdad9fcdb4, type: 3}
   - name: SFX_Tile_MoveObstacle
-    clip: {fileID: 8300000, guid: c8039cd9f7bc66b46919e3a67ad9cc69, type: 3}
+    clip: {fileID: 8300000, guid: 5c9533c3b19171b40a6274b1e640dffa, type: 3}
   - name: SFX_Tile_FallObstacle
     clip: {fileID: 8300000, guid: c1c4c34ace2b98244bda8b216f860d1c, type: 3}
   - name: SFX_Stage3_Item
