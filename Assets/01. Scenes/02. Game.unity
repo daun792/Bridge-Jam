@@ -4831,7 +4831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &150262585
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25620,7 +25620,7 @@ MonoBehaviour:
   - {fileID: 9100000, guid: 864aa844cf486af489f22a3e63a985d9, type: 2}
   - {fileID: 22100000, guid: 0d3ef1be7cf1321458411c42bae3ebff, type: 2}
   - {fileID: 22100000, guid: 0dc230adba4e91946ae211b4c81607bd, type: 2}
-  stageIndex: 6
+  stageIndex: 0
 --- !u!1 &1048268300
 GameObject:
   m_ObjectHideFlags: 0
@@ -36887,7 +36887,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1587126849}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 100, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 20, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

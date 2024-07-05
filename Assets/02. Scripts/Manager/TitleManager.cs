@@ -13,7 +13,7 @@ public class TitleManager : MonoBehaviour
     {
         Sequence sequence = DOTween.Sequence();
         sequence.Append(backgroundPanel.DOAnchorPosY(-3000f, 0f))
-            .Append(backgroundPanel.DOAnchorPosY(-1080f, 1f).SetEase(Ease.OutCubic))
+            .Append(backgroundPanel.DOAnchorPosY(-1080f, 1.5f).SetEase(Ease.Linear))
             .OnComplete(() => isKeyDown = false);
 
         startDescTxt.DOFade(0f, 1.5f).SetEase(Ease.InCubic).SetLoops (-1, LoopType.Yoyo);
@@ -36,7 +36,7 @@ public class TitleManager : MonoBehaviour
 
         Sequence sequence = DOTween.Sequence();
         sequence.Append(startDescTxt.DOFade(0f, 1f))
-            .Append(backgroundPanel.DOAnchorPosY(1080f, 1f).SetEase(Ease.InCubic))
+            .Append(backgroundPanel.DOAnchorPosY(2200, 1.5f).SetEase(Ease.Linear))
             .OnComplete(() => Base.LoadScene(SceneName.Game));
     }
 }

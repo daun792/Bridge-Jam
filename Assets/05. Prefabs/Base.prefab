@@ -506,11 +506,11 @@ MonoBehaviour:
   - name: SFX_Tile_FallObstacle
     clip: {fileID: 8300000, guid: c1c4c34ace2b98244bda8b216f860d1c, type: 3}
   - name: SFX_Stage3_Item
-    clip: {fileID: 8300000, guid: 29faf418a8755c145a4c3158ecf6e122, type: 3}
+    clip: {fileID: 8300000, guid: 6423a3d680a3e8b4ba07691172b8ebb5, type: 3}
   - name: SFX_Stage6_Item
-    clip: {fileID: 8300000, guid: b36f7c6c5312f4047804675667c5031a, type: 3}
+    clip: {fileID: 8300000, guid: 7cbda1e8674c4e844b836fe15d8ffbda, type: 3}
   - name: SFX_Stage7_Item
-    clip: {fileID: 8300000, guid: d5cbe90475d88934d8751c49913e9cc5, type: 3}
+    clip: {fileID: 8300000, guid: 360188b7ba961c64c912cccd9e8de552, type: 3}
   - name: SFX_Stage10_Item
     clip: {fileID: 8300000, guid: 657a934c226fe5a4989f9ae2c8850fce, type: 3}
   bgmPlayer: {fileID: 2943895315533101109}
