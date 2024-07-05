@@ -6,8 +6,9 @@ public class Stage1 : StageBase
 {
     [SerializeField] GameObject obstacle;
 
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
         StageIndex = 1;
     }
 

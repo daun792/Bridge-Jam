@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Stage2 : StageBase
 {
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
         StageIndex = 2;
     }
 
     public override void UseDrug()
     {
-        Base.Manager.Map.ChangeJumpRange(5f);
+        Base.Manager.Map.ChangeJumpSpeed(0.2f);
     }
 }

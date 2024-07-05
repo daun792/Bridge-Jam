@@ -7,8 +7,9 @@ public class Stage8 : StageBase
     [SerializeField] Transform cleanFallObstacleParent;
     [SerializeField] Transform drugFallObstacleParent;
 
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
         StageIndex = 8;
     }
 

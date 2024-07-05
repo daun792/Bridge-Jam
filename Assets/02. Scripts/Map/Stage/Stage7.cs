@@ -13,9 +13,10 @@ public class Stage7 : StageBase
 
     private bool isUseDrug = false;
 
-    
-    void Start()
+
+    protected override void Awake()
     {
+        base.Awake();
         StageIndex = 7;
     }
 

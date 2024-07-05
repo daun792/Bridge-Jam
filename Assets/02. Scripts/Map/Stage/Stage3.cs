@@ -7,8 +7,9 @@ public class Stage3 : StageBase
     [SerializeField] GameObject cleanRainbow;
     [SerializeField] GameObject drugRainbow;
 
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
         StageIndex = 3;
     }
 
