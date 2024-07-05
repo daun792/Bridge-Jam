@@ -52,24 +52,31 @@ public class MapManager : Manager
         SetDrugEffect();
     }
 
-    public void ReloadStage()
-    {
-        //Base.Manager.Sound.PlaySFX("SFX_PlayerDead");
-
-        InitStage();
-        currStage.ResetStage();
-    }
-
     private void InitStage()
     {
         MoveCamera();
         MovePlayer();
 
-        if (timeCheckRoutine != null) 
+        if (timeCheckRoutine != null)
             StopCoroutine(timeCheckRoutine);
         timeCheckRoutine = CheckTime();
         StartCoroutine(timeCheckRoutine);
     }
+
+    public void PlayerDead()
+    {
+        Base.Manager.Sound.PlaySFX("SFX_PlayerDead");
+
+        Base.Manager.UI.FadeInOut(ReloadStage);
+    }
+
+    private void ReloadStage()
+    {
+        InitStage();
+        currStage.ResetStage();
+    }
+
+    
 
     private void MoveCamera()
     {

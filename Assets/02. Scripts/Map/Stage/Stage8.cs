@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Stage8 : StageBase
 {
+    [SerializeField] Transform cleanFallObstacleParent;
+    [SerializeField] Transform drugFallObstacleParent;
+
     void Start()
     {
         StageIndex = 8;
@@ -13,5 +16,21 @@ public class Stage8 : StageBase
     {
         Base.Manager.Map.StopTimeBacking();
         Base.Manager.Map.ModifyPlayerSpeed(1f);
+
+        FallObstacle[] obstacles;
+
+        if (isClean)
+        {
+            obstacles = cleanFallObstacleParent.GetComponentsInChildren<FallObstacle>(true);
+        }
+        else
+        {
+            obstacles = drugFallObstacleParent.GetComponentsInChildren<FallObstacle>(true);
+        }
+
+        foreach (var obstacle in obstacles)
+        {
+            obstacle.SetItemEffect();
+        }
     }
 }

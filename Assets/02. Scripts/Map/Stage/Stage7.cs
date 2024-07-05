@@ -7,6 +7,7 @@ public class Stage7 : StageBase
     [SerializeField] Transform itemStartPosition;
     [SerializeField] Transform cameraTrans;
     [SerializeField] Transform playerTrans;
+    [SerializeField] GameObject obstacle;
     [SerializeField] GameObject cleanCollider;
     [SerializeField] GameObject drugCollider;
 
@@ -38,10 +39,12 @@ public class Stage7 : StageBase
 
     public override void UseDrug()
     {
+        Base.Manager.Sound.PlaySFX("SFX_Stage7_Item");
         Base.Manager.PostProcessing.SetLensDistortion();
 
         if (isClean)
         {
+            obstacle.SetActive(false);
             cleanCollider.SetActive(true);
         }
         else
