@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
@@ -58,6 +59,9 @@ public class CharacterBase : MonoBehaviour
     private string animatorCharacterSpeedName = "CharacterSpeed";
     private string animatorOnGroundName = "OnGround";
     private string animatorInAirName = "InAir";
+    private string animatorFlyName = "Fly";
+
+    private bool canMove = true;
 
     #region Unity Events
     protected virtual void OnEnable()
@@ -77,6 +81,7 @@ public class CharacterBase : MonoBehaviour
     #region Movement
     public virtual void Move(float value)
     {
+        if (canMove == false) return;
         value = Mathf.Clamp(value, -1, 1);
         velocity.x = MovementSpeed * speedCoefficient * value;
         if (onSlope)
@@ -121,6 +126,23 @@ public class CharacterBase : MonoBehaviour
     {
         Base.Manager.Sound.PlaySFX("SFX_PlayerJump");
         gravity.y = JumpVelocity * GravityScale * jumpVelocityCoefficient;
+    }
+
+    public void Fly(Vector3 dest)
+    {
+        canMove = false;
+        characterAnimator.SetBool(animatorFlyName, true);
+        transform.DOMove(transform.position + Vector3.up, 1).OnComplete(() =>
+        {
+            transform.DOMoveX(dest.x, 1).SetEase(Ease.InQuad);
+            transform.DOMoveY(dest.y, 1).SetEase(Ease.OutQuad).OnComplete(() => {
+                characterAnimator.SetBool(animatorFlyName, false);
+                gravity = Vector2.zero;
+                velocity = Vector2.zero;
+                characterRigidbody.velocity = Vector2.zero;
+                canMove = true;
+            });
+        });
     }
 
     protected virtual void EffectedByGravity()

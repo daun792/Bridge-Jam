@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Stage5 : StageBase
 {
+    [SerializeField] Transform cleanDest;
+    [SerializeField] Transform drugDest;
+
     protected override void Awake()
     {
         base.Awake();
@@ -12,6 +15,6 @@ public class Stage5 : StageBase
 
     public override void UseDrug()
     {
-
+        Base.Manager.Map.FlyToDestination(isClean ? cleanDest.position : drugDest.position);
     }
 }
