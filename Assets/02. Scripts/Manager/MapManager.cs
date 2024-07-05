@@ -160,7 +160,7 @@ public class MapManager : Manager
         player.MovementSpeed = _value;
     }
 
-    public void ChangeJumpRange(float _value)
+    public void ChangeJumpSpeed(float _value)
     {
         float inv = 1f / _value;
         player.JumpVelocity = inv;
@@ -193,7 +193,7 @@ public class MapManager : Manager
     public void ModifyPlayerSpeed(float _value)
     {
         ChangeSpeed(_value);
-        ChangeJumpRange(_value);
+        ChangeJumpSpeed(_value);
     }
 
     private void SetTimeBacking()
