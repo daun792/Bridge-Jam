@@ -9,6 +9,13 @@ public class Stage8 : StageBase
 
     public override float GetMiddleCameraPositionX() => 362f;
 
+    public override void SetStage(bool _isClean)
+    {
+        base.SetStage(_isClean);
+
+        Base.Manager.Sound.PlayBGM(_isClean ? "BGM_Clean" : "Ambience_2");
+    }
+
     public override void UseDrug()
     {
         Base.Manager.Map.StopTimeBacking();

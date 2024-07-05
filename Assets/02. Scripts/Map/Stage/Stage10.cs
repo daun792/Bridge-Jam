@@ -8,6 +8,7 @@ public class Stage10 : StageBase
     [SerializeField] Transform playerTrans;
     [SerializeField] GameObject colliderObj;
     [SerializeField] Transform blinkTrans;
+    [SerializeField] GameObject obstaclesParent;
     private Camera cam;
 
     WaitForSeconds wait;
@@ -32,7 +33,9 @@ public class Stage10 : StageBase
 
     public override void UseDrug()
     {
+        obstaclesParent.SetActive(false);
         colliderObj.SetActive(true);
+        Base.Manager.Map.StopWindowLotation();
         // 플레이어 못움직이게
         StartCoroutine(PlayDrugProduction());
     }

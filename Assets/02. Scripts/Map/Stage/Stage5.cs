@@ -9,6 +9,7 @@ public class Stage5 : StageBase
 
     public override void UseDrug()
     {
+        Base.Manager.Sound.VolumeDownBGM();
         Base.Manager.Map.FlyToDestination(isClean ? cleanDest.position : drugDest.position);
     }
 }

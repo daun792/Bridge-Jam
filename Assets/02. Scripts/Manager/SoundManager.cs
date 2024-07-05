@@ -130,15 +130,19 @@ public class SoundManager : Manager
             return;
         }
 
+        bgmPlayer.DOKill();
         bgmPlayer.pitch = 1f;
         bgmPlayer.volume = 0f;
+        bgmPlayer.spatialBlend = 0f;
 
         if (bgmPlayer.isPlaying)
         {
             var playingTime = bgmPlayer.time;
             bgmPlayer.clip = clip;
             bgmPlayer.Play();
-            bgmPlayer.time = playingTime;
+
+            if (bgmPlayer.clip.length > playingTime) 
+                bgmPlayer.time = playingTime;
         }
         else
         {
@@ -152,30 +156,51 @@ public class SoundManager : Manager
 
     public void ResumeBGM()
     {
+        bgmPlayer.DOKill();
         bgmPlayer.pitch = 1f;
+        bgmPlayer.spatialBlend = 0f;
         bgmPlayer.DOFade(1f, 1f).SetEase(Ease.Linear);
     }
 
     public void StopBGM()
     {
+        bgmPlayer.DOKill();
         bgmPlayer.pitch = 1f;
+        bgmPlayer.spatialBlend = 0f;
         bgmPlayer.DOFade(0f, 0f);
     }
 
     public void RealStopBGM()
     {
-        bgmPlayer.DOFade(0f, 0f);
         bgmPlayer.Stop();
     }
 
-    public void PitchBGM()
+    public void VolumeDownBGM()
     {
-        bgmPlayer.pitch = 0.9f;
+        bgmPlayer.DOKill();
+        bgmPlayer.DOFade(0.5f, 0f);
+    }
+
+    public void PitchBGM(float _value)
+    {
+        bgmPlayer.pitch = _value;
     }
 
     public string GetPlayingBGM()
     {
         return bgmPlayer.clip.name;
+    }
+
+    public void SpatialBlendBGM()
+    {
+        float spatialBlend = bgmPlayer.spatialBlend;
+
+        var bgmTween = DOTween.To(() => spatialBlend, x => spatialBlend = x, 1f, 3f)
+            .SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo)
+            .OnUpdate(() =>
+            {
+                bgmPlayer.spatialBlend = spatialBlend;
+            });
     }
     #endregion
 

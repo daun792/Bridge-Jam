@@ -22,6 +22,7 @@ public class MapManager : Manager
     private int drugCount = 0;
     public bool IsClean { get; private set; }
 
+    private IEnumerator windowInvert;
     private IEnumerator backToPreviousPlace;
     private IEnumerator timeCheckRoutine;
     private CharacterBase player;
@@ -58,15 +59,20 @@ public class MapManager : Manager
     {
         Base.Manager.Sound.StopBGM();
 
+        Base.Manager.UI.FadeInOut(SetCurrStage);
+
+        SetDrugEffect();
+    }
+
+    public void SetCurrStage()
+    {
         if (currStage != null)
             Destroy(currStage.gameObject);
         stageIndex++;
         currStage = stages.Find(x => x.StageIndex == stageIndex);
         currStage.SetStage(IsClean);
 
-        Base.Manager.UI.FadeInOut(InitStage);
-
-        SetDrugEffect();
+        InitStage();
     }
 
     private void InitStage()
@@ -134,12 +140,13 @@ public class MapManager : Manager
         switch (stageIndex)
         {
             case 10:
-                StartCoroutine(WindowLotationLoop());
+                SetWindowLotation();
                 if (debuffIndex + 1 == stageIndex) break;
                 goto case 9;
 
             case 9:
                 InvertCamera();
+                SetTimeBacking();
                 if (debuffIndex + 1 == stageIndex) break;
                 goto case 8;
 
@@ -196,7 +203,7 @@ public class MapManager : Manager
             Base.Manager.Sound.PlaySFX("SFX_GetItem");
         }
 
-        Base.Manager.Sound.PitchBGM();
+        Base.Manager.Sound.PitchBGM(0.9f);
 
         drugCount++;
         IsClean = false;
@@ -258,13 +265,16 @@ public class MapManager : Manager
 
     private void SetTimeBacking()
     {
+        if (backToPreviousPlace != null)
+            StopCoroutine(backToPreviousPlace);
         backToPreviousPlace = GetBackToPreviousPlace();
         StartCoroutine(backToPreviousPlace);
     }
 
     public void StopTimeBacking()
     {
-        StopCoroutine(backToPreviousPlace);
+        if (backToPreviousPlace != null)
+            StopCoroutine(backToPreviousPlace);
     }
 
     public void SetPlayerToSpace(bool _isSpace)
@@ -275,7 +285,8 @@ public class MapManager : Manager
 
     private IEnumerator GetBackToPreviousPlace()
     {
-        float interval = Random.Range(3f, 10f);
+        Debug.Log("dd");
+        float interval = Random.Range(2f, 5f);
 
         while (true)
         {
@@ -286,8 +297,21 @@ public class MapManager : Manager
             yield return new WaitForSeconds(0.5f);
 
             playerTrans.position = pos;
-            interval = Random.Range(2f, 7f);
+            interval = Random.Range(2f, 5f);
         }
+    }
+
+    private void SetWindowLotation()
+    {
+        if (windowInvert != null)
+            StopCoroutine(windowInvert);
+        windowInvert = WindowLotationLoop();
+        StartCoroutine(windowInvert);
+    }
+
+    public void StopWindowLotation()
+    {
+        StopCoroutine(windowInvert);
     }
 
     private IEnumerator WindowLotationLoop()

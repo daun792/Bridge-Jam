@@ -10,6 +10,7 @@ public class Stage7 : StageBase
     [SerializeField] Transform playerTrans;
 
     [SerializeField] GameObject obstacle;
+    [SerializeField] GameObject obstacle2;
     [SerializeField] GameObject cleanCollider;
 
     private bool isUseDrug = false;
@@ -44,7 +45,9 @@ public class Stage7 : StageBase
 
     public override void UseDrug()
     {
+        Base.Manager.Sound.RealStopBGM();
         Base.Manager.Sound.PlaySFX("SFX_Stage7_Item");
+        StartCoroutine(PlayAmbience());
         Base.Manager.PostProcessing.SetLensDistortion();
 
         if (isClean)
@@ -62,5 +65,11 @@ public class Stage7 : StageBase
             cameraTrans.position = new Vector3(300f, -40f, -10f);
             playerTrans.position = drugDrugStage.startPosition.position;
         }
+    }
+
+    private IEnumerator PlayAmbience()
+    {
+        yield return new WaitForSeconds(1f);
+        Base.Manager.Sound.PlayBGM("Ambience_1");
     }
 }

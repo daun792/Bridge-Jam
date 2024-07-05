@@ -488,6 +488,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: f4d2def0868b1214fac7db5b142488ef, type: 3}
   - name: BGM_Title
     clip: {fileID: 8300000, guid: 5c96e8d079ad21e4b8df2f8fe653c841, type: 3}
+  - name: Ambience_1
+    clip: {fileID: 8300000, guid: 453d672d2141c1942827f28b8e338136, type: 3}
+  - name: Ambience_2
+    clip: {fileID: 8300000, guid: a424e1e58c4038c40936dc4ce72e72c4, type: 3}
   SFX:
   - name: SFX_PlayerDead
     clip: {fileID: 8300000, guid: e947f6f2adf80654690e2a83c8f01484, type: 3}
