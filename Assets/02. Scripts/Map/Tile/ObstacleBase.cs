@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StaticObstacleTile : MonoBehaviour
+public class ObstacleBase : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
@@ -22,5 +22,11 @@ public class StaticObstacleTile : MonoBehaviour
                 }
             } 
         }
+        else
+        {
+            CheckOtherCollision(collision);
+        }
     }
+
+    protected virtual void CheckOtherCollision(Collision2D collision) { }
 }
