@@ -348,20 +348,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5bf1e06a955bc94cbf5f6648c77656d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGM: []
+  BGM:
+  - name: BGM_Clean
+    clip: {fileID: 8300000, guid: 33781e1ecf8f04d4d8e6dd78ac7ade67, type: 3}
+  - name: BGM_Drug
+    clip: {fileID: 8300000, guid: b2afa649d843258458ddce14df33320d, type: 3}
+  - name: BGM_Stage10
+    clip: {fileID: 8300000, guid: f4d2def0868b1214fac7db5b142488ef, type: 3}
   SFX:
-  - name: SFX_DisappearTile_1
-    clip: {fileID: 8300000, guid: 86b4c090b4de2534caa4587597b0103f, type: 3}
-  - name: SFX_DisappearTile_2
-    clip: {fileID: 8300000, guid: 0c20b03ea8f803940ab39dbdad9fcdb4, type: 3}
   - name: SFX_PlayerDead
     clip: {fileID: 8300000, guid: e947f6f2adf80654690e2a83c8f01484, type: 3}
   - name: SFX_PlayerJump
     clip: {fileID: 8300000, guid: 2eb1afb21b605a641bac38263cdab868, type: 3}
+  - name: SFX_PlayerJumpLong
+    clip: {fileID: 8300000, guid: 4e181945470566942958c1a01e7f3c1e, type: 3}
+  - name: SFX_PlayerFly
+    clip: {fileID: 8300000, guid: 52be49d6fb95c65418afc559782c2f1a, type: 3}
   - name: SFX_GetItem
     clip: {fileID: 8300000, guid: f3776050bea70bc4fa1a8077bcef7a93, type: 3}
   - name: SFX_GetItem_Sick
     clip: {fileID: 8300000, guid: 597358d3a9a6b8a489cc449151d8e442, type: 3}
+  - name: SFX_Tile_Disappear
+    clip: {fileID: 8300000, guid: 0c20b03ea8f803940ab39dbdad9fcdb4, type: 3}
+  - name: SFX_Tile_MoveObstacle
+    clip: {fileID: 8300000, guid: c8039cd9f7bc66b46919e3a67ad9cc69, type: 3}
+  - name: SFX_Tile_FallObstacle
+    clip: {fileID: 8300000, guid: c1c4c34ace2b98244bda8b216f860d1c, type: 3}
+  - name: SFX_Stage3_Item
+    clip: {fileID: 8300000, guid: 29faf418a8755c145a4c3158ecf6e122, type: 3}
+  - name: SFX_Stage6_Item
+    clip: {fileID: 8300000, guid: b36f7c6c5312f4047804675667c5031a, type: 3}
+  - name: SFX_Stage7_Item
+    clip: {fileID: 8300000, guid: d5cbe90475d88934d8751c49913e9cc5, type: 3}
+  - name: SFX_Stage10_Item
+    clip: {fileID: 8300000, guid: 657a934c226fe5a4989f9ae2c8850fce, type: 3}
   bgmPlayer: {fileID: 2943895315533101109}
   sfxPlayer: {fileID: 2943895316047845756}
   mixer: {fileID: 24100000, guid: 3078b9a3d9fab494c914d0f39d348e50, type: 2}
