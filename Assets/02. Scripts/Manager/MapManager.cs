@@ -142,7 +142,6 @@ public class MapManager : Manager
                 goto case 7;
 
             case 7:
-                Base.Manager.PostProcessing.SetFlashBack();
                 if (debuffIndex + 1 == stageIndex) break;
                 goto case 6;
 
@@ -217,6 +216,8 @@ public class MapManager : Manager
     public void SetInvincible(bool _isInvincible)
     {
         player.Invincible = _isInvincible;
+        Base.Manager.PostProcessing.SetFlashBack();
+        player.SetFlashBack();
     }
 
     public void FlyToDestination(Vector3 _dest)
