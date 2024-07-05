@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ObstacleBase : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
@@ -24,9 +24,9 @@ public class ObstacleBase : MonoBehaviour
         }
         else
         {
-            CheckCollisionTag();
+            CheckOtherCollision(collision);
         }
     }
 
-    protected virtual void CheckCollisionTag() { }
+    protected virtual void CheckOtherCollision(Collision2D collision) { }
 }
