@@ -1,6 +1,8 @@
 using DG.Tweening;
 using System;
+using System.Collections;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterBase : MonoBehaviour
@@ -62,6 +64,9 @@ public class CharacterBase : MonoBehaviour
     private string animatorFlyName = "Fly";
 
     private bool canMove = true;
+    private Material mat;
+    public float matSpeed = .01f;
+    public bool IsSpace = false;
 
     #region Unity Events
     protected virtual void OnEnable()
@@ -70,6 +75,7 @@ public class CharacterBase : MonoBehaviour
         characterCollider = GetComponentInChildren<Collider2D>();
         characterSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         characterAnimator = GetComponentInChildren<Animator>();
+        mat = GetComponent<SpriteRenderer>().material;
     }
 
     protected virtual void Update()
@@ -206,6 +212,49 @@ public class CharacterBase : MonoBehaviour
         characterAnimator.runtimeAnimatorController = controller;
     }
 
+    public void SetFlashBack()
+    {
+        StartCoroutine(ChangeColor());
+    }
+
+    IEnumerator ChangeColor()
+    {
+        Vector2 rOffset = Vector2.zero;
+        Vector2 gOffset = Vector2.zero;
+        Vector2 bOffset = Vector2.zero;
+        Vector2 rDest = new Vector2(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f));
+        Vector2 gDest = new Vector2(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f));
+        Vector2 bDest = new Vector2(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f));
+
+        while (true)
+        {
+            if (Vector2.Distance(rOffset, rDest) < 0.01f)
+            {
+                rDest = new Vector2(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f));
+            }
+            if (Vector2.Distance(gOffset, gDest) < 0.01f)
+            {
+                gDest = new Vector2(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f));
+            }
+            if (Vector2.Distance(bOffset, bDest) < 0.01f)
+            {
+                bDest = new Vector2(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f));
+            }
+            rOffset = Vector2.Lerp(rOffset, rDest, matSpeed);
+            gOffset = Vector2.Lerp(gOffset, gDest, matSpeed);
+            bOffset = Vector2.Lerp(bOffset, bDest, matSpeed);
+
+            mat.SetFloat("_OffsetRedX", rOffset.x);
+            mat.SetFloat("_OffsetRedY", rOffset.y);
+            mat.SetFloat("_OffsetBlueX", gOffset.x);
+            mat.SetFloat("_OffsetBlueY", gOffset.y);
+            mat.SetFloat("_OffsetGreenX", bOffset.x);
+            mat.SetFloat("_OffsetGreenY", bOffset.y);
+            yield return null;
+        }
+
+    }
+
     protected void MakeImmobile(bool rememberVelocity = true)
     {
         characterRigidbody.isKinematic = true;
@@ -270,7 +319,6 @@ public class CharacterBase : MonoBehaviour
         Debug.DrawRay(characterCollider.bounds.center + Vector3.up * characterCollider.bounds.size.y * 0.55f, Vector2.up * characterCollider.bounds.size.y * 0.55f, Color.red, 1f);
         if (hit.collider != null)
         {
-            Debug.Log(hit.collider.gameObject);
             gravity.y = 0;
         }
     }

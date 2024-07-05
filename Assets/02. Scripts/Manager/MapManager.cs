@@ -109,6 +109,7 @@ public class MapManager : Manager
 
     private void SetDrugEffect()
     {
+        SetPlayerToSpace(false);
         if (IsClean)
         {
             Base.Manager.Sound.ResumeBGM();
@@ -142,7 +143,6 @@ public class MapManager : Manager
                 goto case 7;
 
             case 7:
-                Base.Manager.PostProcessing.SetFlashBack();
                 if (debuffIndex + 1 == stageIndex) break;
                 goto case 6;
 
@@ -217,6 +217,8 @@ public class MapManager : Manager
     public void SetInvincible(bool _isInvincible)
     {
         player.Invincible = _isInvincible;
+        Base.Manager.PostProcessing.SetFlashBack();
+        player.SetFlashBack();
     }
 
     public void FlyToDestination(Vector3 _dest)
@@ -252,6 +254,12 @@ public class MapManager : Manager
     public void StopTimeBacking()
     {
         StopCoroutine(backToPreviousPlace);
+    }
+
+    public void SetPlayerToSpace(bool _isSpace)
+    {
+        player.IsSpace = _isSpace;
+        ChangeJumpSpeed(0.5f);
     }
 
     private IEnumerator GetBackToPreviousPlace()
